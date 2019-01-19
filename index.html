@@ -25,8 +25,35 @@
    
     <div id="root"></div>
 
-    <script src="scripts/create.js"></script>
+    <div id="createModal" class="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Product Creation</h5>         
+          </div>
+          <div class="modal-body">
+            <label for="txtDesc">*Product title</label>
+            <input class="form-control" id="txtDesc" placeholder="Enter product description">
+            <label for="txtSKU">*SKU</label>
+            <input class="form-control" id="txtSKU" placeholder="Enter product SKU">
+            <label for="txtURL">*URL</label>
+            <input class="form-control" id="txtURL" placeholder="Enter product URL">
+            <label for="txtModel">*Model</label>
+            <input class="form-control" id="txtModel" placeholder="Enter product Model">
+            <label for="txtPrice">*Price</label>
+            <input class="form-control" id="txtPrice" placeholder="Enter product Price">            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btnCreateProduct">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancel">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <script src="scripts/scripts.js"></script>
+    <script src="scripts/create.js"></script>
+    
     
   
 </body>
