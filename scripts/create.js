@@ -79,7 +79,6 @@ btnCreate.textContent = 'Create';
 
 fset.appendChild(btnCreate);
 
-
 productForm.appendChild(fset);
 app.appendChild(productForm);
 
@@ -97,6 +96,5 @@ elem.addEventListener('click',()=>
     console.log(SKU.value);
     console.log(URL.value);
     console.log(Model.value);
-    alert('Wait!!');
-    
+    alert('Wait!!');    
 });
