@@ -5,26 +5,108 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Prisol</title>
+  <title>Priset</title>
+ 
+  <!-- Bootstrap core CSS-->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Page level plugin CSS-->
+  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin.css" rel="stylesheet"> 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   
-  <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-
-  <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </head>
 
 <body>
-   
-    <div id="root"></div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
+    <a class="navbar-brand mr-1" href="index.html">Priset</a>
+
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+      <i class="fas fa-bars"></i>
+    </button>
+  <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Navbar -->
+  <ul class="navbar-nav ml-auto ml-md-0">
+    <li class="nav-item dropdown no-arrow mx-1">
+      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell fa-fw"></i>
+        <span class="badge badge-danger">9+</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </li>
+    <li class="nav-item dropdown no-arrow mx-1">
+      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-envelope fa-fw"></i>
+        <span class="badge badge-danger">7</span>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </li>
+    <li class="nav-item dropdown no-arrow">
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-user-circle fa-fw"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+        <a class="dropdown-item" href="#">Settings</a>
+        <a class="dropdown-item" href="#">Activity Log</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+      </div>
+    </li>
+  </ul>
+
+</nav>   
+    
+  <div id="wrapper"> 
+        <!-- Sidebar -->
+      <ul class="sidebar navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Products</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="charts.html">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Charts</span></a>
+          </li>          
+        </ul>      
+        <div id="content-wraper">
+        </div>
+       
+      
+    <!-- <div>this is the modal windows needed in the system</div> -->
     <div id="createModal" class="modal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -49,13 +131,52 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>    
+
+    <div id="editModal" class="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Product Edition</h5>         
+            </div>
+            <div class="modal-body">
+              <label for="txtDesc">*Product title</label>
+              <input class="form-control" id="txtEditDesc" placeholder="Enter product description">
+              <label for="txtSKU">*SKU</label>
+              <input class="form-control" id="txtEditSKU" placeholder="Enter product SKU" readonly>
+              <label for="txtURL">*URL</label>
+              <input class="form-control" id="txtEditURL" placeholder="Enter product URL">
+              <label for="txtModel">*Model</label>
+              <input class="form-control" id="txtEditModel" placeholder="Enter product Model">
+              <label for="txtPrice">*Price</label>
+              <input class="form-control" id="txtEditPrice" placeholder="Enter product Price">            
+              <label for="txtPrice">*Technical especification</label>
+              <input class="form-control" id="txtEditTecSpect" placeholder="Enter product Price">            
+              <label for="txtPrice">*Due date</label>
+              <input class="form-control" id="txtEditDueDate" placeholder="Enter product Price">            
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="btnEditProduct">Save changes</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnEditCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>         
     
-    <script src="scripts/scripts.js"></script>
-    <script src="scripts/create.js"></script>
-    
-    
-  
+  </div>
+
+  <script src="scripts/scripts.js"></script>
+  <script src="scripts/create.js"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+
 </body>
 
 </html>
