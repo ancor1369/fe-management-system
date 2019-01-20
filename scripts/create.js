@@ -1,47 +1,108 @@
-const app = document.getElementById('root');
 
-const logo = document.createElement('img');
-logo.src = 'assets/logo1.png';
-
-const containder = document.createElement('div');
-containder.setAttribute('class','container');
-app.appendChild(logo);
-app.appendChild(containder);
-
-
-var productForm = document.createElement('form');
-productForm.setAttribute('class','mb3');
-var fset = document.createElement('fieldset');
+//Object creation
+//const app = document.getElementById('root');
+const app = document.getElementById('content-wraper');
 
 var btnCreate = document.createElement('button');
-//btnCreate.setAttribute('type','submit');
 btnCreate.setAttribute('type','button');
 btnCreate.setAttribute('class','btn btn-primary');
 btnCreate.setAttribute('id','btnCreate');
 btnCreate.textContent = 'Create';
 
-fset.appendChild(btnCreate);
+const containder = document.createElement('div');
+//containder.setAttribute('class','container');
+containder.setAttribute('class','containe-fluid');
+app.appendChild(btnCreate);
+app.appendChild(containder);
+
+var productForm = document.createElement('form');
+productForm.setAttribute('class','mb3');
+var fset = document.createElement('fieldset');
 
 productForm.appendChild(fset);
 app.appendChild(productForm);
 
+//Main controls of the window1
 var CreateModal = document.getElementById('createModal');
 var buttonCreate = document.getElementById('btnCreate');
+var EditModal = document.getElementById('editModal');
 var alertSuccess = document.getElementById('Advertise');
 
-buttonCreate.onclick = function(){
+///Modal windows getter
+var btnCreatePRoduct = document.getElementById('btnCreateProduct');
+var btnCancelProduct = document.getElementById('btnCancel');
+
+var btnProdEdit = document.getElementById('btnEditProduct');
+var bntPrdEditCancel = document.getElementById('btnEditCancel');
+
+//Show creation modal
+buttonCreate.onclick = function()
+{
     CreateModal.style.display = "block";
 }
 
-var btnCreatePRoduct = document.getElementById('btnCreateProduct');
-var btnCancelProduct = document.getElementById('btnCancel');
+//Hide product creation window without any changes
+btnCancelProduct.addEventListener('click',()=>{
+    CreateModal.style.display = "none";
+});
+
+//Hide edition modal
+bntPrdEditCancel.onclick = function(){
+    EditModal.style.display = "none";
+}
+
+//Populates the page with products
+//loadProductsCards();
+loadProductsTable();
+
+//Clcik events
+btnProdEdit.onclick = function()
+{    
+    var edtDesc = document.getElementById('txtEditDesc');
+    var edtSku = document.getElementById('txtEditSKU');
+    var edtUrl = document.getElementById('txtEditURL');
+    var edtModel = document.getElementById('txtEditModel');
+    var edtPrice = document.getElementById('txtEditPrice');
+    var edtTecSpect = document.getElementById('txtEditTecSpect');
+    var edtDueDate = document.getElementById('txtEditDueDate');
+    
+    const priceValue = edtPrice.value;
+
+    var price = priceValue.split(',',2);
+    if(price[1]==null)
+    {
+        price[1] = "00"
+    }
+    var message = JSON.stringify({
+        PriceDollar: price[0],
+        PriceCents: price[1],
+        Description: edtDesc.value,
+        URL: edtUrl.value,
+        SKU: edtSku.value,
+        Model: edtModel.value,
+        DueDate: edtDueDate.value,
+        TechSpect: edtTecSpect.value
+        });
+        console.log(message);
+        edtProductReq(message);
+
+        edtDesc = "";
+        edtSku = "";
+        edtUrl = "";
+        edtModel = "";
+        edtPrice = "";
+        edtTecSpect = "";
+        edtDueDate = "";
+}
+
+
 
 btnCreatePRoduct.onclick = function(){
         var Description = document.getElementById('txtDesc');
         var SKU = document.getElementById('txtSKU');
         var URL = document.getElementById('txtURL');
         var Model = document.getElementById('txtModel');
-        var Price = document.getElementById('txtPrice');      
+        var Price = document.getElementById('txtPrice'); 
 
         var price = Price.value.split('.',2);
         if(price[1]==null)
@@ -57,35 +118,28 @@ btnCreatePRoduct.onclick = function(){
             Model:Model.value,
             DueDate: "1/2/3",
             TechSpect: "Pending to be implemented"
-            });
-     console.log(message);
-
-     var APIQuery = new XMLHttpRequest();
-     APIQuery.open('post','http://localhost:3000/products');
-     APIQuery.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-     APIQuery.send(message);
-
-     APIQuery.onload=function(parameter)
-     {
-        console.log(parameter);
-        if(parameter.target.status == 200)
-        {
-            location.reload();    
-        }
-     }              
-
+            });     
+     crtProductReq(message);
+     Description.value = "";
+     SKU.value = "";
+     URL.value = "";
+     Model.value = "";
+     Price.value = "";
 }
 
-btnCancelProduct.addEventListener('click',()=>{
-    CreateModal.style.display = "none";
-});
+function clearScreen()
+{
+    var element =  document.getElementById('root');
+    console.log(element);
+    element.parentNode.removeChild(element);
+}
 
+// var buttonDelete =  document.getElementById('deleteButton');
 
-//Populates the page with products
-loadProducts();
-
-
-
+// buttonDelete.addEventListener('click',() =>{
+//     console.log('Button clicked');
+//     console.log(parameter);
+// });
 
 
 // elem.addEventListener('click',()=>
