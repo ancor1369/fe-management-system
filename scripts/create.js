@@ -35,6 +35,25 @@ var btnCancelProduct = document.getElementById('btnCancel');
 var btnProdEdit = document.getElementById('btnEditProduct');
 var bntPrdEditCancel = document.getElementById('btnEditCancel');
 
+//Delete product variables
+var deleteModal = document.getElementById('deleteWarningModal');
+var SKUtoDelete;
+var acceptDelete = document.getElementById('btnDeleteAccept');
+var candelDelete =  document.getElementById('btnDeleteCancel');
+
+var emptyCreateAlert = document.getElementById('createIncompleteAlert');
+emptyCreateAlert.style.display = "none";
+//accept the product deletion
+acceptDelete.onclick = function()
+{
+    dltProductReq(SKUtoDelete);
+}
+
+candelDelete.onclick = function()
+{
+    deleteModal.style.display = "none";
+}
+
 //Show creation modal
 buttonCreate.onclick = function()
 {
@@ -103,28 +122,46 @@ btnCreatePRoduct.onclick = function(){
         var URL = document.getElementById('txtURL');
         var Model = document.getElementById('txtModel');
         var Price = document.getElementById('txtPrice'); 
+        var tecSpect = document.getElementById('txtTecSpect');
+        var dueDate = document.getElementById('txtDueDate');
 
-        var price = Price.value.split('.',2);
-        if(price[1]==null)
+        // var datePick = document.getElementById('createDate');
+        // const picker = datepicker(datePick);
+        
+        if(  Description.value == '' ||   SKU.value == '' ||   URL.value == '' || 
+        Model.value == '' || Price.value == '' || tecSpect.value == '' ||  dueDate.value  == '')
         {
-            price[1] = "00"
+            emptyCreateAlert.style.display = "block";
+            setTimeout(()=>{
+                emptyCreateAlert.style.display = "none";
+            },3000)
         }
-        var message = JSON.stringify({
-            PriceDollar: price[0],
-            PriceCents: price[1],
-            Description: Description.value,
-            URL: URL.value,
-            SKU:SKU.value,
-            Model:Model.value,
-            DueDate: "1/2/3",
-            TechSpect: "Pending to be implemented"
-            });     
-     crtProductReq(message);
-     Description.value = "";
-     SKU.value = "";
-     URL.value = "";
-     Model.value = "";
-     Price.value = "";
+        else{
+            var price = Price.value.split('.',2);
+                if(price[1]==null)
+                {
+                    price[1] = "00"
+                }
+                var message = JSON.stringify({
+                    PriceDollar: price[0],
+                    PriceCents: price[1],
+                    Description: Description.value,
+                    URL: URL.value,
+                    SKU:SKU.value,
+                    Model:Model.value,
+                    // DueDate: dueDate.value,
+                    TechSpect: tecSpect.value,
+                    });     
+            crtProductReq(message);
+            Description.value = "";
+            SKU.value = "";
+            URL.value = "";
+            Model.value = "";
+            Price.value = "";
+            tecSpect.value = "";
+            dueDate.value  = "";        
+        }       
+    
 }
 
 function clearScreen()

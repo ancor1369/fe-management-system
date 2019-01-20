@@ -17,12 +17,13 @@ function dltProductReq(SKU)
      }      
 }
 
+//Edit product
 function edtProductReq(Product)
 {    
     var prod = JSON.parse(Product);
     console.log(prod);
     var editRequest = new XMLHttpRequest();
-    var address = 'http://localhost:3000/products/' + prod.SKU;
+    var address = concatPath(queryURL, prod.SKU);
     console.log(address);
     editRequest.open('PATCH', address,true);
     editRequest.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -38,6 +39,7 @@ function edtProductReq(Product)
      }      
 }
 
+//Create product
 function crtProductReq(message)
 {
     var APIQuery = new XMLHttpRequest();
@@ -55,11 +57,45 @@ function crtProductReq(message)
     }   
 }
 
+//This method woill obtain the product
+function getSingleProduct(SKU){
+    
+    return new Promise((resolve,reject)=>{
+    
+        var APIProduct = new XMLHttpRequest();
+        var address = 'http://localhost:3000/products/' + SKU;
+        console.log(address);
+        APIProduct.open('get',address);
+        APIProduct.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+        APIProduct.send();
+
+        APIProduct.onload = function(parameter)
+        {
+            // console.log(parameter);
+            // console.log(parameter.target.response);
+            if(parameter.target.status == 200)
+            {
+                try{                    
+                    resolve({
+                        product: parameter.target.response
+                    });
+                }
+                catch(e)
+                {
+                    console.log(e);
+                    reject(JSON.stringify(e));
+                }
+            }
+            else
+            {
+                reject('Not possible to obtain information');
+            }
+        }
+    });
+}
 
 function loadProductsTable()
 {
-
-
     const div1 = document.createElement('div');
     div1.setAttribute('class','card mb-3');
     const div2 = document.createElement('card-header');
@@ -124,6 +160,7 @@ function loadProductsTable()
             td1.textContent = obj.Description;
             var td2 = document.createElement('td');
             td2.textContent = obj.SKU;
+            const _SKU = obj.SKU;
             var td3 = document.createElement('td');
             td3.textContent = obj.Model;
             var td4 = document.createElement('td');
@@ -137,25 +174,7 @@ function loadProductsTable()
             var td6 = document.createElement('td');
             const edit = document.createElement('button');
             edit.setAttribute('class', 'btn btn-primary');
-            edit.setAttribute('type', 'button');
-            
-            // edit.onclick=function(){                
-            //     var edtDesc = document.getElementById('txtEditDesc');
-            //     var edtSku = document.getElementById('txtEditSKU');
-            //     var edtUrl = document.getElementById('txtEditURL');
-            //     var edtModel = document.getElementById('txtEditModel');
-            //     var edtPrice = document.getElementById('txtEditPrice');
-            //     var edtTecSpect = document.getElementById('txtEdittecSpect');
-            //     var edtDueDate = document.getElementById('txtEditDueDate');                
-                
-            //     edtDesc.value = h1.textContent;                
-            //     edtSku.value = SKU.textContent.substr(5);
-            //     edtUrl.value = URL.textContent.substring(5);
-            //     edtModel.value = Model.textContent.substr(7);
-            //     edtPrice.value = Price.textContent.substring(7);
-
-            //     EditModal.style.display = "block";              
-            // }
+            edit.setAttribute('type', 'button');           
             
             var sp = document.createElement('span');
             sp.setAttribute('class','fas fa-edit fa-fw');
@@ -178,6 +197,47 @@ function loadProductsTable()
             tre.appendChild(td5);      
             tre.appendChild(td6);     
             tbody.appendChild(tre);
+
+
+            edit.onclick=function()
+            {               
+                
+                getSingleProduct(_SKU).then((response)=>
+                {
+                    console.log(response);                    
+                    var product = JSON.parse(response.product);                    
+                    var edtDesc = document.getElementById('txtEditDesc');
+                    var edtSku = document.getElementById('txtEditSKU');
+                    var edtUrl = document.getElementById('txtEditURL');
+                    var edtModel = document.getElementById('txtEditModel');
+                    var edtPrice = document.getElementById('txtEditPrice');
+                    var edtTecSpect = document.getElementById('txtEditTecSpect');
+                    var edtDueDate = document.getElementById('txtEditDueDate');                
+                    
+                    edtDesc.value = product.result[0].Description;                
+                    edtSku.value = product.result[0].SKU;
+                    edtUrl.value = product.result[0].URL;
+                    edtModel.value = product.result[0].Model;
+                    edtPrice.value = product.result[0].PriceDollar + ',' + product.result[0].PriceCents;                    
+                    edtTecSpect.value = product.result[0].TechSpect;
+                    edtDueDate.value = product.result[0].DueDate;
+    
+                    EditModal.style.display = "block";     
+                },(reject)=>{
+                    console.log('rejected', reject);
+                });               
+                        
+            }
+
+            del.onclick = function(){
+                //var test = confirm('Are you sure you want to delete this product?')
+                deleteModal.style.display = "block";
+                SKUtoDelete = _SKU;
+                // if(test==true)
+                // { 
+                //    
+                // }
+            }
         }
     }
     request.send();
