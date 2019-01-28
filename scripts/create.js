@@ -149,7 +149,7 @@ btnCreatePRoduct.onclick = function(){
                     URL: URL.value,
                     SKU:SKU.value,
                     Model:Model.value,
-                    // DueDate: dueDate.value,
+                    DueDate: dueDate.value,
                     TechSpect: tecSpect.value,
                     });     
             crtProductReq(message);

@@ -44,12 +44,35 @@
   <div id="wrapper"> 
         <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
+
           <li class="nav-item active">
-            <a class="nav-link" href="index.html">
-              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <a class="nav-link" href="dashboard.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+              </a>
+          </li>            
+
+          <li class="nav-item active">
+            <a class="nav-link" href="products.html">
+              <i class="fas fa-fw fa-product-hunt"></i>
               <span>Products</span>
             </a>
           </li>                 
+
+          <li class="nav-item active">
+            <a class="nav-link" href="priman.html">
+              <i class="fas fa-fw fa-compass"></i>
+              <span>Price management</span>
+            </a>
+          </li>  
+          
+          <li class="nav-item active">
+            <a class="nav-link" href="branches.html">
+              <i class="fas fa-fw fa-store-alt"></i>
+              <span>Branches</span>
+            </a>
+          </li>  
+
         </ul>      
         <div id="content-wraper">
         </div>
@@ -84,7 +107,9 @@
             <textarea class="form-control" id="txtTecSpect" placeholder="Enter product technical specification">
             </textarea>
             <label for="txtDueDate">*Due date</label>
-            <input class="form-control" id="txtDueDate" placeholder="Enter product duedate">  
+            <input type="date" class="form-control" id="txtDueDate" placeholder="Enter product duedate">  
+            <!-- <input type="date" class="input-group date" id="txtDueDate" placeholder="Enter product duedate">   -->
+
            
           </div>
           <div class="modal-footer">
@@ -117,7 +142,7 @@
               <textarea class="form-control" id="txtEditTecSpect" placeholder="Enter product technical specification">
                 </textarea>
               <label for="txtPrice">*Due date</label>
-              <input class="form-control" id="txtEditDueDate" placeholder="Enter product duedate">            
+              <input type="date"  class="form-control" id="txtEditDueDate" placeholder="Enter product duedate">            
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" id="btnEditProduct">Save changes</button>
@@ -138,7 +163,7 @@
               <p>Are you sure you want to delete this item?</p>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" id="btnDeleteAccept">Save changes</button>
+              <button type="button" class="btn btn-danger" id="btnDeleteAccept">Delete</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnDeleteCancel">Cancel</button>
             </div>
           </div>
