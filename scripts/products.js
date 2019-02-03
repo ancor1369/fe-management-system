@@ -23,7 +23,9 @@ function edtProductReq(Product)
     var prod = JSON.parse(Product);
     console.log(prod);
     var editRequest = new XMLHttpRequest();
-    var address = concatPath(queryURL, prod.SKU);
+    var URL = queryURL;
+    URL = concatPath(URL,"products");
+    var address = concatPath(URL, prod.SKU);
     console.log(address);
     editRequest.open('PATCH', address,true);
     editRequest.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -57,7 +59,7 @@ function crtProductReq(message)
     }   
 }
 
-//This method woill obtain the product
+//This method will obtain the product
 function getSingleProduct(SKU){
     
     return new Promise((resolve,reject)=>{
@@ -114,19 +116,18 @@ function loadProductsTable()
     const tfoot = document.createElement('tfoot');
     const tr = document.createElement('tr');
     const th1 = document.createElement('th');
-    th1.textContent = 'Description';
+    th1.textContent = 'Title';
     const th2 = document.createElement('th');
     th2.textContent = 'SKU';
     const th3 = document.createElement('th');
-    th3.textContent = 'Model';
+    th3.textContent = 'UPC';
     const th4 = document.createElement('th');
-    th4.textContent = 'URL';
+    th4.textContent = 'Model';          
     const th5 = document.createElement('th');
-    th5.textContent = 'Price';
+    th5.textContent = 'URL';    
     const th6 = document.createElement('th');
     th6.textContent = 'Actions';
     const tbody = document.createElement('tbody');
-
 
     containder.appendChild(div1);
     div1.appendChild(div2);
@@ -140,8 +141,8 @@ function loadProductsTable()
     thead.appendChild(tr);
     tr.appendChild(th1);
     tr.appendChild(th2);
-    tr.appendChild(th3);
-    tr.appendChild(th4);
+    tr.appendChild(th3);    
+    tr.appendChild(th4);    
     tr.appendChild(th5);
     tr.appendChild(th6);
 
@@ -157,10 +158,12 @@ function loadProductsTable()
             var obj = data[i];                 
             var tre = document.createElement('tr');
             var td1 = document.createElement('td');
-            td1.textContent = obj.Description;
+            td1.textContent = obj.Title;
             var td2 = document.createElement('td');
             td2.textContent = obj.SKU;
             const _SKU = obj.SKU;
+            var td2_1 = document.createElement('td');
+            td2_1.textContent = obj.UPC;
             var td3 = document.createElement('td');
             td3.textContent = obj.Model;
             var td4 = document.createElement('td');
@@ -169,8 +172,8 @@ function loadProductsTable()
             link.setAttribute('target','_blank');            
             link.textContent = obj.URL;            
             td4.appendChild(link);
-            var td5 = document.createElement('td');
-            td5.textContent = obj.PriceDollar + ',' +obj.PriceCents;
+            // var td5 = document.createElement('td');
+            // td5.textContent = obj.PriceDollar + ',' +obj.PriceCents;
             var td6 = document.createElement('td');
             const edit = document.createElement('button');
             edit.setAttribute('class', 'btn btn-primary');
@@ -192,9 +195,10 @@ function loadProductsTable()
             
             tre.appendChild(td1);
             tre.appendChild(td2);
+            tre.appendChild(td2_1);
             tre.appendChild(td3);
             tre.appendChild(td4);
-            tre.appendChild(td5);      
+            // tre.appendChild(td5);      
             tre.appendChild(td6);     
             tbody.appendChild(tre);
 
@@ -210,33 +214,26 @@ function loadProductsTable()
                     var edtSku = document.getElementById('txtEditSKU');
                     var edtUrl = document.getElementById('txtEditURL');
                     var edtModel = document.getElementById('txtEditModel');
-                    var edtPrice = document.getElementById('txtEditPrice');
+                    var edtUPC = document.getElementById('txtEditUPC');
                     var edtTecSpect = document.getElementById('txtEditTecSpect');
-                    var edtDueDate = document.getElementById('txtEditDueDate');                
                     
-                    edtDesc.value = product.result[0].Description;                
+                    
+                    edtDesc.value = product.result[0].Title;                
                     edtSku.value = product.result[0].SKU;
+                    edtUPC.value = product.result[0].UPC;
                     edtUrl.value = product.result[0].URL;
-                    edtModel.value = product.result[0].Model;
-                    edtPrice.value = product.result[0].PriceDollar + ',' + product.result[0].PriceCents;                    
+                    edtModel.value = product.result[0].Model;                                      
                     edtTecSpect.value = product.result[0].TechSpect;
-                    edtDueDate.value = product.result[0].DueDate;
+                    
     
                     EditModal.style.display = "block";     
                 },(reject)=>{
                     console.log('rejected', reject);
-                });               
-                        
+                });                                       
             }
-
-            del.onclick = function(){
-                //var test = confirm('Are you sure you want to delete this product?')
+            del.onclick = function(){                
                 deleteModal.style.display = "block";
-                SKUtoDelete = _SKU;
-                // if(test==true)
-                // { 
-                //    
-                // }
+                SKUtoDelete = _SKU;                
             }
         }
     }
