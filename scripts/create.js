@@ -79,27 +79,17 @@ btnProdEdit.onclick = function()
 {    
     var edtDesc = document.getElementById('txtEditDesc');
     var edtSku = document.getElementById('txtEditSKU');
+    var edtUPC = document.getElementById('txtEditUPC');
     var edtUrl = document.getElementById('txtEditURL');
-    var edtModel = document.getElementById('txtEditModel');
-    var edtPrice = document.getElementById('txtEditPrice');
+    var edtModel = document.getElementById('txtEditModel');    
     var edtTecSpect = document.getElementById('txtEditTecSpect');
-    var edtDueDate = document.getElementById('txtEditDueDate');
-    
-    const priceValue = edtPrice.value;
-
-    var price = priceValue.split(',',2);
-    if(price[1]==null)
-    {
-        price[1] = "00"
-    }
-    var message = JSON.stringify({
-        PriceDollar: price[0],
-        PriceCents: price[1],
-        Description: edtDesc.value,
+  
+    var message = JSON.stringify({        
+        Title: edtDesc.value,
         URL: edtUrl.value,
         SKU: edtSku.value,
-        Model: edtModel.value,
-        DueDate: edtDueDate.value,
+        UPC: edtUPC.value,
+        Model: edtModel.value,        
         TechSpect: edtTecSpect.value
         });
         console.log(message);
@@ -108,28 +98,23 @@ btnProdEdit.onclick = function()
         edtDesc = "";
         edtSku = "";
         edtUrl = "";
-        edtModel = "";
-        edtPrice = "";
-        edtTecSpect = "";
-        edtDueDate = "";
+        edtModel = "";        
+        edtTecSpect = "";       
 }
 
 
 
 btnCreatePRoduct.onclick = function(){
-        var Description = document.getElementById('txtDesc');
+        var Title = document.getElementById('txtDesc');
         var SKU = document.getElementById('txtSKU');
         var URL = document.getElementById('txtURL');
-        var Model = document.getElementById('txtModel');
-        var Price = document.getElementById('txtPrice'); 
+        var UPC = document.getElementById('txtUPC');
+        var Model = document.getElementById('txtModel');        
         var tecSpect = document.getElementById('txtTecSpect');
-        var dueDate = document.getElementById('txtDueDate');
-
-        // var datePick = document.getElementById('createDate');
-        // const picker = datepicker(datePick);
         
-        if(  Description.value == '' ||   SKU.value == '' ||   URL.value == '' || 
-        Model.value == '' || Price.value == '' || tecSpect.value == '' ||  dueDate.value  == '')
+        
+        if(  Title.value == '' ||   SKU.value == '' ||   URL.value == '' || 
+        Model.value == '' || UPC.value == '' || tecSpect.value == '')
         {
             emptyCreateAlert.style.display = "block";
             setTimeout(()=>{
@@ -137,31 +122,25 @@ btnCreatePRoduct.onclick = function(){
             },3000)
         }
         else{
-            var price = Price.value.split('.',2);
-                if(price[1]==null)
-                {
-                    price[1] = "00"
-                }
+           
                 var message = JSON.stringify({
-                    PriceDollar: price[0],
-                    PriceCents: price[1],
-                    Description: Description.value,
+                   
+                    Title: Title.value,
                     URL: URL.value,
                     SKU:SKU.value,
-                    Model:Model.value,
-                    DueDate: dueDate.value,
+                    UPC:UPC.value,
+                    Model:Model.value,                    
                     TechSpect: tecSpect.value,
                     });     
+            console.log(message);
             crtProductReq(message);
-            Description.value = "";
+            Title.value = "";
             SKU.value = "";
             URL.value = "";
-            Model.value = "";
-            Price.value = "";
-            tecSpect.value = "";
-            dueDate.value  = "";        
-        }       
-    
+            UPC.value = "";
+            Model.value = "";            
+            tecSpect.value = "";            
+        }           
 }
 
 function clearScreen()
@@ -170,96 +149,4 @@ function clearScreen()
     console.log(element);
     element.parentNode.removeChild(element);
 }
-
-// var buttonDelete =  document.getElementById('deleteButton');
-
-// buttonDelete.addEventListener('click',() =>{
-//     console.log('Button clicked');
-//     console.log(parameter);
-// });
-
-
-// elem.addEventListener('click',()=>
-// {
-//     var Description = document.getElementById('txtDesc');
-//     var SKU = document.getElementById('txtSKU');
-//     var URL = document.getElementById('txtURL');
-//     var Model = document.getElementById('txtModel');
-//     var Price = document.getElementById('txtPrice');
-//     console.log(Price.value);
-//     console.log(Description.value);
-//     console.log(SKU.value);
-//     console.log(URL.value);
-//     console.log(Model.value);   
-// });
-
-
-// var lblDesc = document.createElement('label');
-// lblDesc.textContent = "Product mainline description";
-// lblDesc.setAttribute('for','txtDesc');
-// var txtDesc = document.createElement('input');
-// txtDesc.setAttribute('class','form-control');
-// txtDesc.setAttribute('id','txtDesc');
-// txtDesc.setAttribute('placeholder','Enter product description');
-
-// fset.appendChild(lblDesc);
-// fset.appendChild(txtDesc);
-
-// var lblSKU = document.createElement('label');
-// lblSKU.textContent = 'SKU';
-// lblSKU.setAttribute('for','txtSKU');
-// var txtSKU =  document.createElement('input');
-// txtSKU.setAttribute('class','form-control');
-// txtSKU.setAttribute('id','txtSKU');
-// txtSKU.setAttribute('placeholder','Enter product SKU');
-
-// fset.appendChild(lblSKU);
-// fset.appendChild(txtSKU);
-
-
-// var lblURL = document.createElement('label');
-// lblURL.textContent = 'URL';
-// lblURL.setAttribute('for','txtURL');
-// var txtURL =  document.createElement('input');
-// txtURL.setAttribute('class','form-control');
-// txtURL.setAttribute('id','txtURL');
-// txtURL.setAttribute('placeholder','Enter product URL');
-
-// fset.appendChild(lblURL);
-// fset.appendChild(txtURL);
-
-// var lblModel = document.createElement('label');
-// lblModel.textContent = 'Model';
-// lblModel.setAttribute('for','txtModel');
-// var txtModel =  document.createElement('input');
-// txtModel.setAttribute('class','form-control');
-// txtModel.setAttribute('id','txtModel');
-// txtModel.setAttribute('placeholder','Enter product Model');
-
-// fset.appendChild(lblModel);
-// fset.appendChild(txtModel);
-
-// var lblPrice = document.createElement('label');
-// lblPrice.textContent = 'Price';
-// lblPrice.setAttribute('for','txtPrice');
-// var txtPrice =  document.createElement('input');
-// txtPrice.setAttribute('class','form-control');
-// txtPrice.setAttribute('id','txtPrice');
-// txtPrice.setAttribute('placeholder','Enter product Price');
-
-// fset.appendChild(lblPrice);
-// fset.appendChild(txtPrice);
-
-// var btnCreate = document.createElement('button');
-// //btnCreate.setAttribute('type','submit');
-// btnCreate.setAttribute('class','btn btn-primary');
-// btnCreate.setAttribute('id','btnCreate');
-// btnCreate.textContent = 'Create';
-
-// fset.appendChild(btnCreate);
-
-// productForm.appendChild(fset);
-// app.appendChild(productForm);
-
-// var elem= document.getElementById('btnCreate');
 

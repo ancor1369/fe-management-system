@@ -75,10 +75,50 @@
 
         </ul>      
         <div id="content-wraper">
-        </div>    
+        </div>  
+        
+    <!--this is the modal windows needed in the system -->
+    <div id="createPrice" class="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Product Creation</h5>         
+          </div>
+          <div class="modal-body">                
+           <div id="createIncompleteAlert" class="alert alert-dismissible alert-warning">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <h4 class="alert-heading">Warning!</h4>
+              <p class="mb-0">Please fill all the fields before creating<a href="#" class="alert-link"></a>.</p>
+            </div>
+            <label for="lblPrice">Price</label>
+            <input class="form-control" id="txtPrice" placeholder="Enter product new price">
+            <label for="txtSKU">Type</label>
+            <select class="form-control" id="ddlPriceType">
+              <!-- This opcions shall come from the database, they will be like this until it makes sense changing into the dabase -->
+              <option value="Select">Select</option>
+              <option value="Regular">Regular</option>
+              <option value="Sale">Sale</option>
+              <option value="Clearance">Clearance</option>
+            </select>
+            <label for="txtUPC">Start Date</label>
+            <input class="form-control" id="datePiStartDate" type="date">
+            <label for="txtURL">End Date</label>
+            <input class="form-control" id="dateDueDate" type="date">            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btnUpdatePrice">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelUpdate">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+
 
   </div>
-  
+    
+  <script src="scripts/variables.js"></script>
+  <script src="scripts/PriceUpdate/create.js"></script>
+  <script src="scripts/PriceUpdate/prices.js"></script>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
