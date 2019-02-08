@@ -17,6 +17,15 @@ function dltProductReq(SKU)
      }      
 }
 
+// var prod = JSON.parse(Product);
+// console.log(prod);
+// var editRequest = new XMLHttpRequest();
+// var address = concatPath(queryURL, prod.SKU);
+// console.log(address);
+// editRequest.open('PATCH', address,true);
+// editRequest.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+// editRequest.send(Product);
+
 //Edit product
 function edtProductReq(Product)
 {    
@@ -27,7 +36,7 @@ function edtProductReq(Product)
     URL = concatPath(URL,"products");
     var address = concatPath(URL, prod.SKU);
     console.log(address);
-    editRequest.open('PATCH', address,true);
+    editRequest.open('PATCH', address, true);
     editRequest.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
     editRequest.send(Product);
 

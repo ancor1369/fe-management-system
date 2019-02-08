@@ -81,27 +81,15 @@ btnProdEdit.onclick = function()
     var edtSku = document.getElementById('txtEditSKU');
     var edtUPC = document.getElementById('txtEditUPC');
     var edtUrl = document.getElementById('txtEditURL');
-    var edtModel = document.getElementById('txtEditModel');
-    //var edtPrice = document.getElementById('txtEditPrice');
+    var edtModel = document.getElementById('txtEditModel');    
     var edtTecSpect = document.getElementById('txtEditTecSpect');
-    //var edtDueDate = document.getElementById('txtEditDueDate');
-    
-    //const priceValue = edtPrice.value;
-
-    // var price = priceValue.split(',',2);
-    // if(price[1]==null)
-    // {
-    //     price[1] = "00"
-    // }
-    var message = JSON.stringify({
-        // PriceDollar: price[0],
-        // PriceCents: price[1],
+  
+    var message = JSON.stringify({        
         Title: edtDesc.value,
         URL: edtUrl.value,
         SKU: edtSku.value,
         UPC: edtUPC.value,
-        Model: edtModel.value,
-        //DueDate: edtDueDate.value,
+        Model: edtModel.value,        
         TechSpect: edtTecSpect.value
         });
         console.log(message);
@@ -110,10 +98,8 @@ btnProdEdit.onclick = function()
         edtDesc = "";
         edtSku = "";
         edtUrl = "";
-        edtModel = "";
-        //edtPrice = "";
-        edtTecSpect = "";
-        //edtDueDate = "";
+        edtModel = "";        
+        edtTecSpect = "";       
 }
 
 
