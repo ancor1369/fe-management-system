@@ -140,8 +140,7 @@ btnCreatePRoduct.onclick = function(){
             UPC.value = "";
             Model.value = "";            
             tecSpect.value = "";            
-        }       
-    
+        }           
 }
 
 function clearScreen()

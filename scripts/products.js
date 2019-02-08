@@ -232,8 +232,7 @@ function loadProductsTable()
                     edtUPC.value = product.result[0].UPC;
                     edtUrl.value = product.result[0].URL;
                     edtModel.value = product.result[0].Model;                                      
-                    edtTecSpect.value = product.result[0].TechSpect;
-                    
+                    edtTecSpect.value = product.result[0].TechSpect;                    
     
                     EditModal.style.display = "block";     
                 },(reject)=>{
