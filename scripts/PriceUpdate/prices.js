@@ -1,4 +1,31 @@
 
+// This function will retrive the requested price from the database
+function searchOnePrice(ProductSKU)
+{    
+    //In this method I make sure that the two methods are created so that they 
+    //are trigered sequencially and I can make sure that the resulst come as are needed.
+    var priceHistory = promiseUnits('prices',ProductSKU);   
+    priceHistory.then(function(result){
+        var priceHistory =  JSON.parse(result.explicitOriginalTarget.response);
+        
+        var product = promiseUnits('products',ProductSKU);
+        product.then(function(result)
+        {
+            var prd = JSON.parse(result.explicitOriginalTarget.response);
+            ProductInfo(prd);
+            createTablePrice(priceHistory);            
+            console.log(prd);
+        },function(err)
+        {
+            console.log(err);
+        });
+        
+        console.log('Done');
+    },function(err){
+        console.log(err);
+    });   
+}
+
 function saveNewPrice()
 {
     var whole = parseInt(udtPrice.value);
@@ -24,36 +51,10 @@ function saveNewPrice()
 
     updateResult.then((result)=>
     {
-        
+        console.log(result);
     },(err)=>{
         
     });
-}
-
-// This function will retrive the requested price from the database
-function searchOnePrice(ProductSKU)
-{    
-    //In this method I make sure that the two methods are created so that they 
-    //are trigered sequencially and I can make sure that the resulst come as are needed.
-    var priceHistory = promiseUnits('prices',ProductSKU);   
-    priceHistory.then(function(result){
-        var priceHistory =  JSON.parse(result.explicitOriginalTarget.response);
-        
-        var product = promiseUnits('products',ProductSKU);
-        product.then(function(result){
-            var prd = JSON.parse(result.explicitOriginalTarget.response);
-            ProductInfo(prd); 
-            createTablePrice(priceHistory);                   
-            
-            console.log(prd);
-        },function(err){
-            console.log(err);
-        });
-        
-        console.log('Done');
-    },function(err){
-        console.log(err);
-    });   
 }
 
 function promiseUnits(crud,id)
@@ -187,7 +188,7 @@ function ProductInfo(prd)
 
 function createTablePrice(pricehistory)
 {
-    //If the div already exists, it si removed, otherwise it does its natural task
+    //If the div already exists, it is removed, otherwise it does its natural task
     try{
         var rmDiv = document.getElementById('priceDif');
         rmDiv.remove();
@@ -199,7 +200,7 @@ function createTablePrice(pricehistory)
     console.log('Table Creation'); 
     //console.log(pricehistory);
     const div1 = document.createElement('div');
-    div1.setAttribute('class','card mb-3');
+    div1.setAttribute('class','card mb-3'); 
     div1.setAttribute('id','priceDif');
     const div2 = document.createElement('card-header');
     div2.setAttribute('class','card-header');
@@ -209,7 +210,7 @@ function createTablePrice(pricehistory)
     const div4 = document.createElement('div');
     div4.setAttribute('class','table-responsive');
     const table = document.createElement('table');
-    table.setAttribute('class','table table-bordered');
+    table.setAttribute('class','table table-bordered');    
     table.setAttribute('id','dataTable');
     table.setAttribute('width','100%');
     table.setAttribute('cellspacing','0');
@@ -239,23 +240,12 @@ function createTablePrice(pricehistory)
     tr.appendChild(th1);
     tr.appendChild(th2);
     tr.appendChild(th3);    
-    tr.appendChild(th4);    
-    
-    // Convert the dates into redable formats
-    var dateObj = new Date(pricehistory.dueDate);
-    var duDateMM = dateObj.getMonth(); 
-    var dueDateDay = dateObj.getUTCDate();
-    var dueDateYear = dateObj.getUTCFullYear();
+    tr.appendChild(th4);          
 
-    var dateObj = new Date(pricehistory.startDate);
-    var startDateMM = dateObj.getMonth(); 
-    var startDateDay = dateObj.getUTCDate();
-    var startDateYeae = dateObj.getUTCFullYear();
-    
-    var price = pricehistory.priceWhole + ',' +pricehistory.priceFraction;
-    var dueDate = duDateMM + '/' + dueDateDay + '/' + dueDateYear;
-    var startDate = startDateMM + '/' + startDateDay + '/' + startDateYeae;
+    var dueDate = createDateFormat(pricehistory.dueDate);
+    var startDate = createDateFormat(pricehistory.startDate); 
     var _type = pricehistory.type;           
+    var price = '$ ' +  pricehistory.priceWhole + '.' + parseInt(pricehistory.priceFraction);
     
     var trt =  document.createElement('tr');
     trt.setAttribute('class','bg-warning');
@@ -271,17 +261,40 @@ function createTablePrice(pricehistory)
     trt.appendChild(td2);
     trt.appendChild(td3);
     trt.appendChild(td4);
-    tbody.appendChild(trt);    
-    
+    tbody.appendChild(trt);        
     var prices = pricehistory.priceHistory;
-
     console.log(prices);
-
-    for(i=0; i < Object.keys(data).length ; i++)
+    for(i=0; i < Object.keys(prices).length ; i++)
     {
-        
-    }
-    
+        var oldPrice = prices[i];
+        console.log(oldPrice);
+        var trpr = document.createElement('tr');
+        var td1pr = document.createElement('td');
+        td1pr.textContent = '$ ' + oldPrice.priceWhole + '.' + parseInt(oldPrice.priceFraction);
+        var td2pr = document.createElement('td');
+        td2pr.textContent = createDateFormat(oldPrice.startDate);
+        var td3pr = document.createElement('td');
+        td3pr.textContent = createDateFormat(oldPrice.dueDate);
+        var td4pr = document.createElement('td');
+        td4pr.textContent = oldPrice.type;
+
+        trpr.appendChild(td1pr);
+        trpr.appendChild(td2pr);
+        trpr.appendChild(td3pr);
+        trpr.appendChild(td4pr);
+        tbody.appendChild(trpr);
+    }    
+}
+
+function createDateFormat(dateFormat)
+{
+    var dateObjGen = new Date(dateFormat);
+    var startDateMMGen = dateObjGen.getMonth(); 
+    var startDateDayGen = dateObjGen.getUTCDate();
+    var startDateYearGen = dateObjGen.getUTCFullYear();
+
+    var startDate = startDateMMGen + '/' + startDateDayGen + '/' + startDateYearGen;
+    return startDate;
 }
 
 
