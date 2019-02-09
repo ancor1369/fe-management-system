@@ -60,14 +60,15 @@ updatePrice.onclick = function()
     }
     else{
         
-        var priceToUse = parseFloat(udtPrice.value);
-        console.log(priceToUse);
+        var priceToUse = parseFloat(udtPrice.value);        
         if(isNaN(priceToUse))
         {
             alert('Please, use a number for the price');
             return;
         }
         saveNewPrice();
+        searchOnePrice(ProductSKU);
+        modalUpdate.style.display = 'none';
     }
 
 }
