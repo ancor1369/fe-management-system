@@ -217,23 +217,29 @@ function loadProductsTable()
                 
                 getSingleProduct(_SKU).then((response)=>
                 {
-                    console.log(response);                    
-                    var product = JSON.parse(response.product);                    
-                    var edtDesc = document.getElementById('txtEditDesc');
-                    var edtSku = document.getElementById('txtEditSKU');
-                    var edtUrl = document.getElementById('txtEditURL');
-                    var edtModel = document.getElementById('txtEditModel');
-                    var edtUPC = document.getElementById('txtEditUPC');
-                    var edtTecSpect = document.getElementById('txtEditTecSpect');
+                    console.log(response);  
+                     
+                    try{
+                        var product = JSON.parse(response.product);                    
+                        var edtDesc = document.getElementById('txtEditDesc');
+                        var edtSku = document.getElementById('txtEditSKU');
+                        var edtUrl = document.getElementById('txtEditURL');
+                        var edtModel = document.getElementById('txtEditModel');
+                        var edtUPC = document.getElementById('txtEditUPC');
+                        var edtTecSpect = document.getElementById('txtEditTecSpect');                        
+                        
+                        edtDesc.value = product[0].Title;                
+                        edtSku.value = product[0].SKU;
+                        edtUPC.value = product[0].UPC;
+                        edtUrl.value = product[0].URL;
+                        edtModel.value = product[0].Model;                                      
+                        edtTecSpect.value = product[0].TechSpect;                            
+                        EditModal.style.display = "block"; 
+                    }     
+                    catch(error){
+                        console.log(error);
+                    }             
                     
-                    
-                    edtDesc.value = product.result[0].Title;                
-                    edtSku.value = product.result[0].SKU;
-                    edtUPC.value = product.result[0].UPC;
-                    edtUrl.value = product.result[0].URL;
-                    edtModel.value = product.result[0].Model;                                      
-                    edtTecSpect.value = product.result[0].TechSpect;                    
-    
                     EditModal.style.display = "block";     
                 },(reject)=>{
                     console.log('rejected', reject);
