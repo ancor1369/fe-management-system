@@ -71,8 +71,7 @@ function crtProductReq(message)
 //This method will obtain the product
 function getSingleProduct(SKU){
     
-    return new Promise((resolve,reject)=>{
-    
+    return new Promise((resolve,reject)=>{    
         var APIProduct = new XMLHttpRequest();
         var address = 'http://localhost:3000/products/' + SKU;
         console.log(address);

@@ -19,6 +19,7 @@ var warningAlertModal = document.getElementById('createIncompleteAlert');
 //Create the handlers fot the modal window
 var createBranch = document.getElementById('btnCreateBranch');
 var cancelBranch = document.getElementById('btnCancelBranch');
+var EditModal = document.getElementById('editBranch');
 
 //Branch data to update or create
 var txtName = document.getElementById('txtName');
@@ -29,15 +30,18 @@ var txtProvince = document.getElementById('txtProvince');
 var txtAddress = document.getElementById('txtAddress');
 var txtPC = document.getElementById('txtPC');
 
-//Populate the table upfront
-var AllStores = promiseGetAll();
+loadStoresList();
 
-AllStores.then((result)=>{
-    var response = JSON.parse(result.target.response);
-    console.log(response);
-}).catch((error)=>{
-    console.log(error);
-});
+
+//Populate the table upfront
+// var AllStores = promiseGetAll();
+
+// AllStores.then((result)=>{
+//     var response = JSON.parse(result.target.response);
+//     console.log(response);
+// }).catch((error)=>{
+//     console.log(error);
+// });
 
 
 
