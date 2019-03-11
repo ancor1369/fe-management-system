@@ -8,12 +8,13 @@ function promiseQuery(crud,method, message)
     return new Promise((resolve,reject)=>{
         URL = queryURL;
         URL = concatPath(URL,crud);
-
+        console.log(URL);
         var request =  new XMLHttpRequest();
 
         request.open(method,URL,true);    
         if(message!=undefined) 
         {
+            console.log('With cors');
             request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');       
             request.send(message);
         }
@@ -23,7 +24,7 @@ function promiseQuery(crud,method, message)
         }
         
         request.onload=function(result){
-            if(result.target.status = 200)
+            if(result.target.status == 200)
             {
                 resolve(result);
             }
@@ -36,7 +37,7 @@ function promiseQuery(crud,method, message)
 
 function promiseGetAll()
 {
-    return promiseQuery('store','get','');    
+    return promiseQuery('store','get','');
 }
 
 
@@ -104,6 +105,7 @@ function loadStoresList()
             var td2 = document.createElement('td');
             td2.textContent = obj.Number;
             const storeNumber = obj.Number;
+            const id = obj._id;
             var td2_1 = document.createElement('td');
             if(obj.Active==true){
                 td2_1.textContent = 'Yes';
@@ -141,64 +143,69 @@ function loadStoresList()
             tre.appendChild(td6);     
             tbody.appendChild(tre);
 
-
             edit.onclick=function()
             {               
                 
-                var cruProgramming = 'store/'+storeNumber;
-                promiseQuery(cruProgramming,'get').then((response)=>{
+                var crudStore = 'store/'+storeNumber;
+                storeToEdit = storeNumber;       
+                storeToEditID = id;         
+                promiseQuery(crudStore,'get').then((response)=>{
                     
                     try{
-                        var storeData = JSON.parse(response.target.response);                    
-                        console.log(storeData[0]);
-                        var storeName = document.getElementById('txtEditName');
-                        var storeNumber = document.getElementById('txtEditNumber');
-                        var storeCountry = document.getElementById('txtEditCountry');
-                        var storeProvince = document.getElementById('txtEditProvince');
-                        var storeCity = document.getElementById('txtEditCity');
-                        var storeAddress = document.getElementById('txtEditAddress');                        
-                        var storePostalCode = document.getElementById('txtEditPC');
-                        var raTrue = document.getElementById('raEditTrue');
-                        var raFalse = document.getElementById('raEditFalse');
-                        
+                        var storeData = JSON.parse(response.target.response);                                           
                         storeName.value = storeData[0].Name;                
-                        storeNumber.value = storeData[0].Number;
+                        store_Number.value = storeData[0].Number;
                         storeCity.value = storeData[0].City;
                         storeCountry.value = storeData[0].Country;
                         storeProvince.value = storeData[0].Province;                                      
                         storeAddress.value = storeData[0].Address;  
                         storePostalCode.value = storeData[0].PostalCode;
+                        console.log(storeData[0].Active);
                         if(storeData[0].Active == true)
-                        {
-                            raTrue.checked = true;
-                            raFalse.checked = false;
+                        {                            
+                            raEditTrue.checked = true;                            
                         }
-                        else{
-                            raTrue.checked = false;
-                            raFalse.checked = true;
+                        else{                                                        
+                            raEditFalse.checked = true;
                         }
+                        warningEditModal.style.display = "none";
                         EditModal.style.display = "block"; 
+                        
                     }     
                     catch(error){
                         console.log(error);
                     }             
                     
                     EditModal.style.display = "block"; 
+                    warningEditModal.style.display = "none";
 
 
                 }).catch((error)=>{
-
+                        console.log(error);
                 });               
                                                
             }
-            del.onclick = function(){                
-                // deleteModal.style.display = "block";
-                // SKUtoDelete = Number;
+            del.onclick = function(){       
+
+                if(confirm('Are you sure you want to delete the store?'))
+                {                      
+                    var query = 'store/'+id; 
+                    var delPromise = promiseQuery(query,'DELETE','');
+                    delPromise.then((result)=>{                                                
+                        location.reload();
+                    }).catch((err)=>{
+                        console.log('Error', + err);
+                    });
+                }   
+                
+                
             }
+
+
         }
     }).catch((error)=>
     {
         console.log(error);
     });
-
 }
+

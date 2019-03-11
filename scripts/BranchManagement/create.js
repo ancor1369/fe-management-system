@@ -13,15 +13,20 @@ container.setAttribute('class','contain-fluid');
 
 app.appendChild(createButton);
 app.appendChild(container);
+var storeToEdit = "";
+var storeToEditID = "";
 
 var CreateModal = document.getElementById('createBranch');
+var EditModal = document.getElementById('editBranch');
 var warningAlertModal = document.getElementById('createIncompleteAlert');
+var warningEditModal = document.getElementById('editIncompleteAlert');
 //Create the handlers fot the modal window
 var createBranch = document.getElementById('btnCreateBranch');
 var cancelBranch = document.getElementById('btnCancelBranch');
-var EditModal = document.getElementById('editBranch');
+var editBranchSave = document.getElementById('btnEditBranch');
+var cancelEditBranch = document.getElementById('btnCancelEditBranch');
 
-//Branch data to update or create
+//Branch data to create
 var txtName = document.getElementById('txtName');
 var txtNumber = document.getElementById('txtNumber');
 var txtCountry = document.getElementById('txtCountry');
@@ -29,6 +34,18 @@ var txtProvince = document.getElementById('txtProvince');
 var txtProvince = document.getElementById('txtProvince');
 var txtAddress = document.getElementById('txtAddress');
 var txtPC = document.getElementById('txtPC');
+
+//to edit
+
+var storeName = document.getElementById('txtEditName');
+var store_Number = document.getElementById('txtEditNumber');
+var storeCountry = document.getElementById('txtEditCountry');
+var storeProvince = document.getElementById('txtEditProvince');
+var storeCity = document.getElementById('txtEditCity');
+var storeAddress = document.getElementById('txtEditAddress');                        
+var storePostalCode = document.getElementById('txtEditPC');
+var raEditTrue = document.getElementById('raEditTrue');
+var raEditFalse = document.getElementById('raEditFalse');
 
 loadStoresList();
 
@@ -44,7 +61,46 @@ loadStoresList();
 // });
 
 
+editBranchSave.onclick = ()=>
+{
+    var actv;    
+    if(raEditTrue.checked)
+    {
+        actv =  true;
+    }
+    else{
+        actv =  false;
+    }
 
+
+    var msg = JSON.stringify({
+        Name:storeName.value,
+        Number:store_Number.value,
+        Country:storeCountry.value,
+        Province : storeProvince.value,
+        City: storeCity.value,
+        Address: storeAddress.value,
+        PostalCode: storePostalCode.value,
+        Active: actv
+        });
+
+    console.log(msg);   
+
+    var endPoint= 'store/'+storeToEditID;
+    var patchStore = promiseQuery(endPoint,'PATCH',msg);
+
+    patchStore.then((result)=>{
+        console.log(result);
+        //location.reload();
+    }).catch((error)=>{
+        console.log(error);
+    });
+}
+
+// cancelEditBranch.onclick = ()=>
+// {
+
+// }
 
 //Clcik handler for the buttons in the form
 createButton.onclick = ()=>{
@@ -69,18 +125,20 @@ createBranch.onclick = ()=>{
             Active: active
         }
     );        
+    console.log(message);
 
     var createStore = promiseQuery('store','post',message);
     createStore.then((result)=>{
         console.log('Product created');
         console.log(result);
+        //location.reload();
     }).catch((error)=>{
         console.log('There was a problem creating the store')
-    });
-    
+    });    
 }
 
-cancelBranch.onclick = ()=>{
+cancelBranch.onclick = ()=>
+{
    
     txtName.value = "";
     txtNumber.value = "";
@@ -91,8 +149,14 @@ cancelBranch.onclick = ()=>{
     CreateModal.style.display = 'none';    
 }
 
-
-
-
-
-
+cancelEditBranch.onclick =()=> 
+{
+    storeName.value = "";
+    store_Number.value = "";
+    storeCountry.value = "";
+    storeProvince.value = ""; 
+    storeCity.value = ""; 
+    storeAddress.value = ""; 
+    storePostalCode.value = ""; 
+    EditModal.style.display = "";     
+}
