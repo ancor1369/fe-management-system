@@ -7,11 +7,12 @@ function searchOnePrice(ProductSKU)
     var priceHistory = promiseUnits('prices',ProductSKU);   
     priceHistory.then(function(result){
         var priceHistory =  JSON.parse(result.explicitOriginalTarget.response);
-        
+        console.log(priceHistory);
         var product = promiseUnits('products',ProductSKU);
         product.then(function(result)
         {
             var prd = JSON.parse(result.explicitOriginalTarget.response);
+            console.log(prd);
             ProductInfo(prd);
             createTablePrice(priceHistory);            
             console.log(prd);

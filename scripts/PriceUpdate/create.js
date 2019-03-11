@@ -50,10 +50,11 @@ searchButton.onclick = function()
 updatePrice.onclick = function()
 {
     console.log('update the price');
-
+    modalUpdate.style.display = 'block';
     if(udtPrice.value == ''|| udtType.value  == '' || udtStartDate.value == ''|| udtDueDate.value == '')
     {
         emptyCreateAlert.style.display = 'block';
+        
         setTimeout(()=>{
             emptyCreateAlert.style.display = 'none';
         },3000);

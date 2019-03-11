@@ -45,40 +45,222 @@
         <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
 
-          <li class="nav-item active">
-              <a class="nav-link" href="dashboard.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-              </a>
-          </li>            
+        <li class="nav-item active">
+          <a class="nav-link" href="dashboard.html">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+          </a>
+      </li>            
 
-          <li class="nav-item active">
-            <a class="nav-link" href="products.html">
-              <i class="fas fa-fw fa-product-hunt"></i>
-              <span>Products</span>
-            </a>
-          </li>                 
+      <li class="nav-item active">
+        <a class="nav-link" href="products.html">
+          <i class="fas fa-fw fa-shopping-basket"></i>
+          <span>Products</span>
+        </a>
+      </li>                 
 
-          <li class="nav-item active">
-            <a class="nav-link" href="priman.html">
-              <i class="fas fa-fw fa-compass"></i>
-              <span>Price management</span>
-            </a>
-          </li>  
-          
-          <li class="nav-item active">
-            <a class="nav-link" href="branches.html">
-              <i class="fas fa-fw fa-store-alt"></i>
-              <span>Branches</span>
-            </a>
-          </li>  
+      <li class="nav-item active">
+        <a class="nav-link" href="priman.html">
+          <i class="fas fa-fw fa-compass"></i>
+          <span>Price management</span>
+        </a>
+      </li>  
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="branches.html">
+          <i class="fas fa-fw fa-store-alt"></i>
+          <span>Branches</span>
+        </a>
+      </li>           
+      
+      <li class="nav-item active">
+        <a class="nav-link" href="productBranch.html">
+          <i class="fas fa-fw fa-tag"></i>
+          <span>Products in Branches</span>
+        </a>
+      </li>
+      </ul>
 
-        </ul>      
-        <div id="content-wraper">
-        </div>    
+      <div id="content-wraper">
+        </div>
+
+      <!-- Modal window to create a new branch -->
+
+    <!--this is the modal windows needed in the system -->
+    <div id="createBranch" class="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Branch Creation</h5>         
+          </div>
+          <div class="modal-body">                
+           <div id="createIncompleteAlert" class="alert alert-dismissible alert-warning">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <h4 class="alert-heading">Warning!</h4>
+              <p class="mb-0">Please fill all the fields before creating<a href="#" class="alert-link"></a>.</p>
+            </div>
+
+            <table>
+              <tr>
+                <td>
+                  <label for="txtName">Name</label>
+                  <input class="form-control" id="txtName" placeholder="Enter Branch Name">
+                </td>
+                <td>
+                  <label for="txtNumber">Number</label>
+                  <input class="form-control" id="txtNumber" placeholder="Enter Number">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="txtCountry">Country</label>
+                  <input class="form-control" id="txtCountry" placeholder="Enter Country">
+                </td>
+                <td>
+                  <label for="txtProvince">Province</label>
+                  <input class="form-control" id="txtProvince" placeholder="Enter Province">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <label for="txtCity">City</label>
+                    <input class="form-control" id="txtCity" placeholder="Enter Postal Code">
+                  
+                  
+                </td>
+                <td>
+                    <label for="txtAddress">Address</label>
+                    <input class="form-control" id="txtAddress" placeholder="Enter Address">
+                  
+                </td>
+              </tr>
+              
+            </tr>
+            <tr>
+              <td>
+                  <label for="txtPC">Postal Code</label>
+                  <input class="form-control" id="txtPC" placeholder="Enter Postal Code">
+              </td>
+              <td>
+                  <table>
+                    <tr>
+                      <td>
+                          <label for="txtSKU" class= "col-md">Active</label>  
+                      </td>
+                      
+                      <td>
+                          <input type="radio" name="gender" value="true" id="raTrue"> True<br>
+                          <input type="radio" name="gender" value="false" id="raFalse"> False<br> 
+                      </td>
+                    </tr>
+                  </table>                
+                 
+              </td>
+            </tr>
+              
+            </table>              
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btnCreateBranch">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelBranch">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+
+     <!--this is the modal windows needed in the system -->
+     <div id="editBranch" class="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Branch Creation</h5>         
+          </div>
+          <div class="modal-body">                
+           <div id="editIncompleteAlert" class="alert alert-dismissible alert-warning">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <h4 class="alert-heading">Warning!</h4>
+              <p class="mb-0">Please fill all the fields before creating<a href="#" class="alert-link"></a>.</p>
+            </div>
+
+            <table>
+              <tr>
+                <td>
+                  <label for="txtEditName">Name</label>
+                  <input class="form-control" id="txtEditName" placeholder="Enter Branch Name">
+                </td>
+                <td>
+                  <label for="txtEditNumber">Number</label>
+                  <input class="form-control" id="txtEditNumber" placeholder="Enter Number" readonly>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="txtEditCountry">Country</label>
+                  <input class="form-control" id="txtEditCountry" placeholder="Enter Country">
+                </td>
+                <td>
+                  <label for="txtEditProvince">Province</label>
+                  <input class="form-control" id="txtEditProvince" placeholder="Enter Province">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                    <label for="txtEditCity">City</label>
+                    <input class="form-control" id="txtEditCity" placeholder="Enter Postal Code">
+                  
+                  
+                </td>
+                <td>
+                    <label for="txtEditAddress">Address</label>
+                    <input class="form-control" id="txtEditAddress" placeholder="Enter Address">
+                  
+                </td>
+              </tr>
+              
+            </tr>
+            <tr>
+              <td>
+                  <label for="txtEditPC">Postal Code</label>
+                  <input class="form-control" id="txtEditPC" placeholder="Enter Postal Code">
+              </td>
+              <td>
+                  <table>
+                    <tr>
+                      <td>
+                          <label for="txtEditSKU" class= "col-md">Active</label>  
+                      </td>
+                      
+                      <td>
+                          <input type="radio" name="gender" value="true" id="raEditTrue"> True<br>
+                          <input type="radio" name="gender" value="false" id="raEditFalse"> False<br> 
+                      </td>
+                    </tr>
+                  </table>                
+                 
+              </td>
+            </tr>
+              
+            </table>              
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btnEditBranch">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelEditBranch">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
   </div>
   
+  <script src="scripts/variables.js"></script>  
+  <script src="scripts/BranchManagement/Branch.js"></script>
+  <script src="scripts/BranchManagement/Create.js"></script>
+  
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
