@@ -79,11 +79,219 @@
           <span>Products in Branches</span>
         </a>
       </li>
+    <!-- Section for modal windows -->
 
+    <!-- Window for store found -->
+      <div id="StoreSearchModal" class="modal">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Store found</h5>
+            </div>
+            <div class="modal-body">
+              <table align="center" width = "100%">
+                <tr>
+                  <td>
+                    <label for="txtStoreNameModal">Name: </label>
+                  </td>
+                  <td>
+                    <label id="txtStoreNameModal"></label>
+                  </td>
+                </tr>
+                <tr>
+                    <td>
+                      <label for="txtStoreNumberModal">Number: </label>
+                    </td>
+                    <td>
+                      <label id="txtStoreNumberModal"></label>
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>
+                        <label for="txtStoreLocationModal">Location: </label>
+                      </td>
+                      <td>
+                        <label id="txtStoreLocationModal"></label>
+                      </td>
+                    </tr>
+              </table>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="btnUpdatePrice">Add</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelUpdate">Cancel</button>
+              </div>
+              
+            </div>
+          </div>          
+        </div>
+      </div>
     
+
+      <!-- search for products -->
+      <div id="ProductSearchModal" class="modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Product found</h5>
+              </div>
+              <div class="modal-body">
+                <table align="center" width = "100%">
+                  <tr>
+                    <td>
+                      <label for="txtProductTitleModal">Title: </label>
+                    </td>
+                    <td>
+                      <label id="txtProductTitleModal"></label>
+                    </td>
+                  </tr>
+                  <tr>
+                      <td>
+                        <label for="txtProductSKUModal">SKU: </label>
+                      </td>
+                      <td>
+                        <label id="txtProductSKUModal"></label>
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                          <label for="txtProductURLModal">URL: </label>
+                        </td>
+                        <td>
+                          <label id="txtProductURLModal"></label>
+                        </td>
+                      </tr>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnUpdatePrice">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelUpdate">Cancel</button>
+                </div>
+                
+              </div>
+            </div>          
+          </div>
+        </div>
+
+      <!-- This is to review what are the products in a store, Looog list of them!! -->
+      <div id="StrPrdModal" class="modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Product found</h5>
+              </div>
+              <div class="modal-body">
+                  <table align="center">
+                      <tr>
+                        <td>
+                          <label for="txtStorPrdNameModal">Name: </label>
+                        </td>
+                        <td>
+                          <label id="txtStorPrdNameModal"></label>
+                        </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            <label for="txtStrPrdNumberModal">Number: </label>
+                          </td>
+                          <td>
+                            <label id="txtStrPrdNumberModal"></label>
+                          </td>
+                        </tr>
+                        <tr>
+                            <td>
+                              <label for="txtStrPrdLoModal">Location: </label>
+                            </td>
+                            <td>
+                              <label id="txtStrPrdLoModal"></label>
+                            </td>
+                          </tr>
+                    </table>
+
+                    <table id="tblprdInStore" class="table-borders">
+                      <th>
+                        Title
+                      </th>
+                      <th>
+                        SKU
+                      </th>
+                      <th>
+                        URL
+                      </th>
+                    </table>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnUpdatePrice">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelUpdate">Cancel</button>
+                </div>
+                
+              </div>
+            </div>          
+          </div>
+        </div>
+
+
+      <!-- This modal lists all the stores where a product is found -->
+      <div id="PrdStoreModal" class="modal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Stores found</h5>
+              </div>
+              <div class="modal-body">
+                  <table align="center" width = "100%"> 
+                      <tr>
+                        <td>
+                          <label for="txtPrdStorNameModal">Name: </label>
+                        </td>
+                        <td>
+                          <label id="txtPrdStorNameModal"></label>
+                        </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            <label for="txtPrdStrNumberModal">Number: </label>
+                          </td>
+                          <td>
+                            <label id="txtPrdStrNumberModal"></label>
+                          </td>
+                        </tr>
+                        <tr>
+                            <td>
+                              <label for="txtPrdStrLoModal">Location: </label>
+                            </td>
+                            <td>
+                              <label id="txtPrdStrLoModal"></label>
+                            </td>
+                          </tr>
+                    </table>
+
+                    <table id="tblStoreInStr" width = "100%">
+                      <th>
+                        Name
+                      </th>
+                      <th>
+                        Number
+                      </th>
+                      <th>
+                        Location
+                      </th>
+                    </table>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="btnUpdatePrice">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelUpdate">Cancel</button>
+                </div>
+                
+              </div>
+            </div>          
+          </div>
+        </div>
+      
 
   </div>
   
+  
+  <!-- This html code -->
+  <script src="scripts/ProductToStore/create.js"></script>
+
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
