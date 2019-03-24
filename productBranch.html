@@ -80,6 +80,49 @@
         </a>
       </li>
     <!-- Section for modal windows -->
+  </ul>
+
+    <!-- Section to stablish the tables on the front end -->
+
+
+    <div id="content-wraper"> 
+     <div class="row">     
+      <div class="col-xl-6 col-sm-2 mb-3">
+          <div class="card-header">
+              <li class="fas fa-store-alt">
+                Store search
+              </li>
+            </div>
+            <div id="storeContent">                
+                
+            </div>          
+       </div>
+       <div class="col-xl-6 col-sm-2 mb-3">
+          <div class="card-header">
+              <li class="fas fa-shopping-basket">
+               Product search
+              </li>
+            </div>
+            <div id="productContent">
+                
+            </div>         
+        </div>
+     </div>
+
+     <div class="card mb-3" > 
+        <div class="card-header">
+            <li class="fas fa-chart-area">
+             Products in stores
+            </li>
+          </div>
+        <div id="productToStore">
+            
+        </div>          
+     </div>
+
+    </div>
+
+
 
     <!-- Window for store found -->
       <div id="StoreSearchModal" class="modal">
@@ -155,14 +198,14 @@
                         <td>
                           <label for="txtProductURLModal">URL: </label>
                         </td>
-                        <td>
-                          <label id="txtProductURLModal"></label>
+                        <td id="txtProductURLModal">
+                          <!-- <label ></label> -->
                         </td>
                       </tr>
                 </table>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnUpdatePrice">Add</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelUpdate">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="btnAddProduct">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancelProduct">Cancel</button>
                 </div>
                 
               </div>
@@ -286,10 +329,23 @@
         </div>
       
 
+        <div id="NotFoundModal" class="modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" class = "md-danger">Item Not Found</h5>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
   </div>
   
   
   <!-- This html code -->
+  <script src="scripts/variables.js"></script>
+  <script src="scripts/ProductToStore/productToStore.js"></script>
   <script src="scripts/ProductToStore/create.js"></script>
 
   <!-- Bootstrap core JavaScript-->

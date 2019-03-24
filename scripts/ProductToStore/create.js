@@ -1,26 +1,203 @@
+var ProductSearchModal = document.getElementById('ProductSearchModal');
+var NotFoundModal = document.getElementById('NotFoundModal');
+var btnAddProduct = document.getElementById('btnAddProduct');
 
-var modal = document.getElementById('PrdStoreModal');
-modal.style.display = "block";
 
-var storeName = document.getElementById('txtPrdStorNameModal');
-storeName.innerText = "Name";
+//Initial and static data infrastructure is created here    
+var storeContent =  document.getElementById('storeContent');
 
-var storea = document.getElementById('txtPrdStrNumberModal');
-storea.innerText = "Staples 266";
+var strForm = document.createElement('div');
+strForm.setAttribute('class','d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0');
+var strSrchBx = document.createElement('input');
+strSrchBx.setAttribute('class','form-control');
+strSrchBx.setAttribute('placeholder','Search by store number');
+var strSrcBtn = document.createElement('button');
+strSrcBtn.setAttribute('class', 'btn btn-primary');
+strSrcBtn.setAttribute('type','button');
+var strSrcBtnli = document.createElement('li');
+strSrcBtnli.setAttribute('class', 'fa fa-search');
 
-var storeb = document.getElementById('txtPrdStrLoModal');
-storeb.innerText = "Staples 26644";
+strSrcBtn.appendChild(strSrcBtnli);
+strForm.appendChild(strSrchBx);
+strForm.appendChild(strSrcBtn);
 
-// var table = document.getElementById('tblprdInStore');
-// let newRow = table.insertRow(-1);
+storeContent.appendChild(strForm);
 
-// let newCell = newRow.insertCell(0);
-// let secondCell = newRow.insertCell(1);
-// let thirdCell = newRow.insertCell(2);
+//Create the search box for the product
+var productContent = document.getElementById('productContent');
+var prdForm =  document.createElement('form');
+prdForm.setAttribute('class','d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0');
+var prdSrcBox = document.createElement('input');
+prdSrcBox.setAttribute('class','form-control');
+prdSrcBox.setAttribute('placeholder','Search by product SKU');
+var prdSrcBtn = document.createElement('button');
+prdSrcBtn.setAttribute('class','btn btn-primary');
+prdSrcBtn.setAttribute('type','button');
+var prdSrcBtnLi = document.createElement('li');
+prdSrcBtnLi.setAttribute('class','fa fa-search');
 
-// let newText = document.createTextNode('Hola Producto nuevo');
-// let newText1 = document.createTextNode('este es un product');
-// let newText2 = document.createTextNode('https://bit.ly/jjdiw');
-// newCell.appendChild(newText);
-// secondCell.appendChild(newText1);
-// thirdCell.appendChild(newText2);
+prdSrcBtn.appendChild(prdSrcBtnLi);
+prdForm.appendChild(prdSrcBox);
+prdForm.appendChild(prdSrcBtn);
+
+productContent.appendChild(prdForm);
+
+var productToStore = document.getElementById('productToStore');
+
+const div1 = document.createElement('div');
+div1.setAttribute('class','card mb-3');
+const div2 = document.createElement('card-header');
+div2.setAttribute('class','card-header');
+div2.textContent = "Product list";
+const div3 = document.createElement('div');
+div3.setAttribute('class','card-body');
+const div4 = document.createElement('div');
+div4.setAttribute('class','table-responsive');
+const table = document.createElement('table');
+table.setAttribute('class','table table-bordered');
+table.setAttribute('width','100%');
+table.setAttribute('cellspacing','0');
+const thead = document.createElement('thead');
+const tfoot = document.createElement('tfoot');
+const tr = document.createElement('tr');
+const th1 = document.createElement('th');
+th1.textContent = 'Description';
+const th2 = document.createElement('th');
+th2.textContent = 'SKU';
+const th3 = document.createElement('th');
+th3.textContent = 'URL';
+const th4 = document.createElement('th');
+th4.textContent = 'Actions';          
+
+const productContentBody = document.createElement('tbody');
+
+productContent.appendChild(div1);
+div1.appendChild(div2);
+div2.appendChild(div3);
+div3.appendChild(div4);
+div4.appendChild(table);
+table.appendChild(thead);
+table.appendChild(tfoot);
+table.appendChild(productContentBody);
+tfoot.appendChild(tr);
+thead.appendChild(tr);
+tr.appendChild(th1);
+tr.appendChild(th2);
+tr.appendChild(th3);    
+tr.appendChild(th4); 
+
+const div1_1 = document.createElement('div');
+div1_1.setAttribute('class','card mb-3');
+const div2_1 = document.createElement('card-header');
+div2_1.setAttribute('class','card-header');
+div2_1.textContent = "Store list";
+const div3_1 = document.createElement('div');
+div3_1.setAttribute('class','card-body');
+const div4_1 = document.createElement('div');
+div4_1.setAttribute('class','table-responsive');
+const table_1 = document.createElement('table');
+table_1.setAttribute('class','table table-bordered');
+//table_1.setAttribute('id','dataTable');
+table_1.setAttribute('width','100%');
+table_1.setAttribute('cellspacing','0');
+const thead_1 = document.createElement('thead');
+const tfoot_1 = document.createElement('tfoot');
+const tr_1 = document.createElement('tr');
+const th1_1 = document.createElement('th');
+th1_1.textContent = 'Name';
+const th2_1 = document.createElement('th');
+th2_1.textContent = 'Number';
+const th3_1 = document.createElement('th');
+th3_1.textContent = 'Location';
+const th4_1 = document.createElement('th');
+th4_1.textContent = 'Actions';          
+
+const storeContentBody = document.createElement('tbody');
+
+storeContent.appendChild(div1_1);
+div1_1.appendChild(div2_1);
+div2_1.appendChild(div3_1);
+div3_1.appendChild(div4_1);
+div4_1.appendChild(table_1);
+table_1.appendChild(thead_1);
+table_1.appendChild(tfoot_1);
+table_1.appendChild(storeContentBody);
+tfoot_1.appendChild(tr_1);
+thead_1.appendChild(tr_1);
+tr_1.appendChild(th1_1);
+tr_1.appendChild(th2_1);
+tr_1.appendChild(th3_1);    
+tr_1.appendChild(th4_1); 
+
+
+
+const div1_2 = document.createElement('div');
+div1_2.setAttribute('class','card mb-3');
+const div2_2 = document.createElement('card-header');
+div2_2.setAttribute('class','card-header');
+div2_2.textContent = "Store list";
+const div3_2 = document.createElement('div');
+div3_2.setAttribute('class','card-body');
+const div4_2 = document.createElement('div');
+div4_2.setAttribute('class','table-responsive');
+const table_2 = document.createElement('table');
+table_2.setAttribute('class','table table-bordered');
+table_2.setAttribute('width','100%');
+table_2.setAttribute('cellspacing','0');
+const thead_2 = document.createElement('thead');
+const tfoot_2 = document.createElement('tfoot');
+const tr_2 = document.createElement('tr');
+const th1_2 = document.createElement('th');
+th1_2.textContent = 'Store Number';
+const th2_2 = document.createElement('th');
+th2_2.textContent = 'Store Name';
+const th3_2 = document.createElement('th');
+th3_2.textContent = 'Product Title';
+const th4_2 = document.createElement('th');
+th4_2.textContent = 'Product SKU';          
+const th5_2 = document.createElement('th');
+th5_2.textContent = 'Product URL';          
+const th6_2 = document.createElement('th');
+th6_2.textContent = 'Actions';          
+
+const productStoreBody = document.createElement('tbody');
+
+productToStore.appendChild(div1_2);
+div1_2.appendChild(div2_2);
+div2_2.appendChild(div3_2);
+div3_2.appendChild(div4_2);
+div4_2.appendChild(table_2);
+table_2.appendChild(thead_2);
+table_2.appendChild(tfoot_2);
+table_2.appendChild(productStoreBody);
+tfoot_2.appendChild(tr_2);
+thead_2.appendChild(tr_2);
+tr_2.appendChild(th1_2);
+tr_2.appendChild(th2_2);
+tr_2.appendChild(th3_2);    
+tr_2.appendChild(th4_2); 
+tr_2.appendChild(th5_2); 
+tr_2.appendChild(th6_2); 
+
+
+//events on the code
+
+prdSrcBtn.onclick = function()
+{
+    let sku = prdSrcBox.value;
+    searchProduct(sku)
+}
+
+strSrcBtn.onclick = ()=>{
+    
+    let storeNumber = strSrchBx.value;
+    console.log(storeNumber);
+}
+
+btnAddProduct.onclick = ()=> 
+{
+    console.log('This is the product add');
+    var sku = document.getElementById('txtProductSKUModal');    
+    var result  = appendPrdToTable(sku.innerText);
+    console.log(result);    
+}

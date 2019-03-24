@@ -1,7 +1,6 @@
 
 //General function to interact with the API.
 //Same method, different use cases
-
 function promiseQuery(crud,method, message)
 {
     console.log('Promise query');

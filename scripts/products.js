@@ -198,9 +198,8 @@ function loadProductsTable()
             td6.appendChild(edit);
             td6.appendChild(del)
             edit.appendChild(sp);
-            del.appendChild(sp1);
-            
-            
+            del.appendChild(sp1);  
+                        
             tre.appendChild(td1);
             tre.appendChild(td2);
             tre.appendChild(td2_1);
