@@ -1,16 +1,20 @@
 var ProductSearchModal = document.getElementById('ProductSearchModal');
 var NotFoundModal = document.getElementById('NotFoundModal');
+var storeModal = document.getElementById("StoreSearchModal");
 var btnAddProduct = document.getElementById('btnAddProduct');
-
+var btnAddStore = document.getElementById('btnStoreAdd');
+var btnCancelProduct = document.getElementById('btnCancelProduct');
+var listStores = [];
+var listProducts = [];
 
 //Initial and static data infrastructure is created here    
 var storeContent =  document.getElementById('storeContent');
 
 var strForm = document.createElement('div');
 strForm.setAttribute('class','d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0');
-var strSrchBx = document.createElement('input');
-strSrchBx.setAttribute('class','form-control');
-strSrchBx.setAttribute('placeholder','Search by store number');
+var strStoreSrchBx = document.createElement('input');
+strStoreSrchBx.setAttribute('class','form-control');
+strStoreSrchBx.setAttribute('placeholder','Search by store number');
 var strSrcBtn = document.createElement('button');
 strSrcBtn.setAttribute('class', 'btn btn-primary');
 strSrcBtn.setAttribute('type','button');
@@ -18,7 +22,7 @@ var strSrcBtnli = document.createElement('li');
 strSrcBtnli.setAttribute('class', 'fa fa-search');
 
 strSrcBtn.appendChild(strSrcBtnli);
-strForm.appendChild(strSrchBx);
+strForm.appendChild(strStoreSrchBx);
 strForm.appendChild(strSrcBtn);
 
 storeContent.appendChild(strForm);
@@ -188,16 +192,67 @@ prdSrcBtn.onclick = function()
     searchProduct(sku)
 }
 
+//Here I will search for the stores in the database
 strSrcBtn.onclick = ()=>{
     
-    let storeNumber = strSrchBx.value;
-    console.log(storeNumber);
+    let storeNumber = strStoreSrchBx.value;
+    searchStore(storeNumber);
 }
 
 btnAddProduct.onclick = ()=> 
 {
-    console.log('This is the product add');
+    console.log('This is where product is added');
     var sku = document.getElementById('txtProductSKUModal');    
     var result  = appendPrdToTable(sku.innerText);
     console.log(result);    
+}
+
+btnAddStore.onclick = ()=>
+{
+    console.log('This is where and store is added');    
+    var storeNumber = document.getElementById('txtStoreNumberModal');
+    var result = appendStoreToTable(storeNumber.innerText);
+
+    console.log(result);
+}
+
+btnCancelStoreAdd.onclick = ()=>{
+    storeModal.style.display = 'none';
+    var storeName = document.getElementById('txtStoreNameModal');
+    var storeNumber = document.getElementById('txtStoreNumberModal');
+    var storeLocation = document.getElementById('txtStoreLocationModal');
+    storeName.textContent = "";
+    storeNumber.textContent = "";
+    storeLocation.textContent = "";
+};
+
+btnCancelProduct.onclick = ()=>{
+    ProductSearchModal.style.display = 'none';
+    var prdTitle = document.getElementById('txtProductTitleModal');
+    var prdSKU = document.getElementById('txtProductSKUModal');
+    var prdURL = document.getElementById('txtProductURLModal');
+    prdTitle.textContent = '';
+    prdSKU.textContent = '';
+    prdURL.textContent = '';
+}
+
+function removeElement(arr, value)
+{
+    return arr.filter(function(ele){
+        return ele != value;
+    });    
+}
+
+function containElement(arr, value)
+{
+    var res =  arr.filter((ele)=>{
+        return ele == value;
+    });
+    if (res.length > 0)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
 }
