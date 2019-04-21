@@ -133,7 +133,9 @@ tr_1.appendChild(th2_1);
 tr_1.appendChild(th3_1);    
 tr_1.appendChild(th4_1); 
 
-
+const actionButton = document.createElement('button');
+actionButton.textContent = 'Assign products to store';
+actionButton.setAttribute('class','btn-primary');
 
 const div1_2 = document.createElement('div');
 div1_2.setAttribute('class','card mb-3');
@@ -160,13 +162,13 @@ th3_2.textContent = 'Product Title';
 const th4_2 = document.createElement('th');
 th4_2.textContent = 'Product SKU';          
 const th5_2 = document.createElement('th');
-th5_2.textContent = 'Product URL';          
-const th6_2 = document.createElement('th');
-th6_2.textContent = 'Actions';          
+th5_2.textContent = 'Product URL';                  
 
 const productStoreBody = document.createElement('tbody');
 
+productToStore.appendChild(actionButton);
 productToStore.appendChild(div1_2);
+
 div1_2.appendChild(div2_2);
 div2_2.appendChild(div3_2);
 div3_2.appendChild(div4_2);
@@ -181,10 +183,14 @@ tr_2.appendChild(th2_2);
 tr_2.appendChild(th3_2);    
 tr_2.appendChild(th4_2); 
 tr_2.appendChild(th5_2); 
-tr_2.appendChild(th6_2); 
 
 
 //events on the code
+
+actionButton.onclick = ()=>
+{
+    addProductStore();
+}
 
 prdSrcBtn.onclick = function()
 {
@@ -239,14 +245,35 @@ btnCancelProduct.onclick = ()=>{
 function removeElement(arr, value)
 {
     return arr.filter(function(ele){
-        return ele != value;
+        return ele.SKU != value.SKU;
     });    
 }
 
 function containElement(arr, value)
 {
     var res =  arr.filter((ele)=>{
-        return ele == value;
+        return ele.SKU == value.SKU;
+    });
+    if (res.length > 0)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function removeElementStore(arr, value)
+{
+    return arr.filter(function(ele){
+        return ele.Number != value.Number;
+    });    
+}
+
+function containElementStore(arr, value)
+{
+    var res =  arr.filter((ele)=>{
+        return ele.Number == value.Number;
     });
     if (res.length > 0)
     {

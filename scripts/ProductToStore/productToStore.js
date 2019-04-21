@@ -44,15 +44,6 @@ function showModalProduct(product)
 //this function appends a new product to the table
 function appendPrdToTable(sku)
 {    
-    if(containElement(listProducts, sku))
-    {        
-        ProductSearchModal.style.display = 'none';
-        return;
-    }
-    else{        
-        listProducts.push(sku);
-    }     
-    
     if(sku.length != 0)
     {
         //Get the product again from the service
@@ -60,8 +51,21 @@ function appendPrdToTable(sku)
         var resultQuery = queryToAPI(query,'get');
         resultQuery.then((result)=>{
             var resJSON = JSON.parse(result.target.response);  
-            console.log(resJSON);
-            
+            console.log(resJSON);    
+            var store = 
+            {
+                SKU: resJSON[0].SKU,
+                Title: resJSON[0].Title,               
+                URL: resJSON[0].ShortURL                                
+            }        
+            if(containElement(listProducts, store))
+            {        
+                ProductSearchModal.style.display = 'none';
+                return;
+            } 
+            else{
+                listProducts.push(store);
+            }
             var tr = document.createElement('tr');
             var th1 = document.createElement('th');
             th1.textContent = resJSON[0].Title;
@@ -71,32 +75,37 @@ function appendPrdToTable(sku)
             link.setAttribute('href',resJSON[0].ShortURL);
             link.setAttribute('target','_blank');
             link.textContent = resJSON[0].ShortURL;
-            var th3 = document.createElement('th');
-            //th3.textContent = link;
+            var th3 = document.createElement('th');            
             th3.appendChild(link);
             var listBtn = document.createElement('button');
             listBtn.setAttribute('class','btn-primary');
             listBtn.textContent = "List";
-            var dltBtn = document.createElement('button');
-            dltBtn.setAttribute('class','btn-danger');
-            dltBtn.textContent = "Remove";
+            // var dltBtn = document.createElement('button');
+            // dltBtn.setAttribute('class','btn-danger');
+            // dltBtn.textContent = "Remove";
             var th4 = document.createElement('th');
             th4.appendChild(listBtn);
-            th4.appendChild(dltBtn);
-            
+            //th4.appendChild(dltBtn);            
             tr.appendChild(th1);
             tr.appendChild(th2);
             tr.appendChild(th3);
             tr.appendChild(th4);
             productContentBody.appendChild(tr);
             ProductSearchModal.style.display = 'none';
-
+            
             listBtn.onclick = () =>{
                 alert(th2.textContent);
             }
             dltBtn.onclick = ()=>{                
-                productContentBody.removeChild(tr);                
-                var res = removeElement(listProducts, th2.textContent);
+                productContentBody.removeChild(tr);   
+                var remObject =
+                {
+                    Title: th1.textContent,
+                    SKU: th2.textContent,
+                    URL: th3.textContent
+                }             
+                var res = removeElement(listProducts, remObject);
+                console.log(res);
                 listProducts = res;
             }
             
@@ -147,17 +156,24 @@ function showModalStore(StoreData)
 function appendStoreToTable(storeNumber)
 {
     var query = 'store' +'/'+storeNumber;
-    var resultQuery = queryToAPI(query,'get');
-    if(containElement(listStores, storeNumber))
-    {        
-        storeModal.style.display = 'none';
-        return;
-    }
-    else{        
-        listStores.push(storeNumber);
-    }    
+    var resultQuery = queryToAPI(query,'get');         
     resultQuery.then((result)=>{
         var storeInfo = JSON.parse(result.target.response);
+        var store =
+        {
+            Number: storeInfo[0].Number,
+            Name: storeInfo[0].Name
+        }
+        if(containElementStore(listStores, store))
+        {        
+            storeModal.style.display = 'none';
+            return;
+        }
+        else{         
+            
+            listStores.push(store);
+        }
+
         var tr = document.createElement('tr');
         var th1 = document.createElement('th');
         var th2 = document.createElement('th');
@@ -169,23 +185,29 @@ function appendStoreToTable(storeNumber)
         var listButton =  document.createElement('button');        
         listButton.setAttribute('class', 'btn-primary');
         listButton.textContent='List';
-        var deleteButton = document.createElement('button');
-        deleteButton.setAttribute('class', 'btn-danger');
-        deleteButton.textContent = 'Remove';
+        // var deleteButton = document.createElement('button');
+        // deleteButton.setAttribute('class', 'btn-danger');
+        // deleteButton.textContent = 'Remove';
         th4.appendChild(listButton);
-        th4.appendChild(deleteButton);
+        // th4.appendChild(deleteButton);
         tr.appendChild(th1);
         tr.appendChild(th2);
         tr.appendChild(th3);
         tr.appendChild(th4);
         storeContentBody.appendChild(tr);
-        storeModal.style.display = 'none';
+        storeModal.style.display = 'none';    
+        
         listButton.onclick =()=>{
             alert('List');
         }        
         deleteButton.onclick = ()=>{
-            storeContentBody.removeChild(tr);
-            var res = removeElement(listStores, th2.textContent);
+            var storeEle=
+            {
+                Number: th2.textContent,
+                Name: th1.textContent
+            }
+            storeContentBody.removeChild(tr);   
+            var res = removeElementStore(listStores, storeEle);
             listStores = res;
         }
 
@@ -193,4 +215,42 @@ function appendStoreToTable(storeNumber)
     {
         console.log(err);
     });
+}
+
+function addProductStore()
+{
+    
+    listProducts.forEach((product,indexpr,arraypr)=>{        
+        listStores.forEach((store, index, array)=>{
+            
+            var tr = document.createElement('tr');
+            var th1 = document.createElement('th');
+            var th2 = document.createElement('th');
+            var th3 = document.createElement('th');
+            var th4 = document.createElement('th');
+            var th5 = document.createElement('th');
+            var th6 = document.createElement('th');        
+            
+            th1.textContent = store.Number;
+            th2.textContent = store.Name;
+            th3.textContent = product.Title;
+            th4.textContent = product.SKU;
+            var link = document.createElement('a');
+            link.setAttribute('href',product.URL);
+            link.setAttribute('target','_blank');
+            link.textContent = product.URL;
+            th5.appendChild(link);
+          
+
+            tr.appendChild(th1);
+            tr.appendChild(th2);
+            tr.appendChild(th3);
+            tr.appendChild(th4);
+            tr.appendChild(th5);
+      
+
+            productStoreBody.appendChild(tr);
+
+         });
+      });
 }
