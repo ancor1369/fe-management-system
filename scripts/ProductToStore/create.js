@@ -97,7 +97,6 @@ const div4_1 = document.createElement('div');
 div4_1.setAttribute('class','table-responsive');
 const table_1 = document.createElement('table');
 table_1.setAttribute('class','table table-bordered');
-//table_1.setAttribute('id','dataTable');
 table_1.setAttribute('width','100%');
 table_1.setAttribute('cellspacing','0');
 const thead_1 = document.createElement('thead');
@@ -209,6 +208,7 @@ tr_1.appendChild(th4_1);
 storeSelect.onchange = ()=>
 {
     appendStoreToTable(storeSelect.value);
+    populateProductsPerStore(storeSelect.value);
 }
 
 prdSrcBtn.onclick = () =>
