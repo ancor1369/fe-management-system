@@ -12,20 +12,16 @@ var storeContent =  document.getElementById('storeContent');
 
 var strForm = document.createElement('div');
 strForm.setAttribute('class','d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0');
-var strStoreSrchBx = document.createElement('input');
-strStoreSrchBx.setAttribute('class','form-control');
-strStoreSrchBx.setAttribute('placeholder','Search by store number');
-var strSrcBtn = document.createElement('button');
-strSrcBtn.setAttribute('class', 'btn btn-primary');
-strSrcBtn.setAttribute('type','button');
-var strSrcBtnli = document.createElement('li');
-strSrcBtnli.setAttribute('class', 'fa fa-search');
-
-strSrcBtn.appendChild(strSrcBtnli);
-strForm.appendChild(strStoreSrchBx);
-strForm.appendChild(strSrcBtn);
+var storeSelect = document.createElement('select');
+storeSelect.setAttribute('class','form-control');
+var option = document.createElement('option');
+option.text = 'Select one store';
+option.value = -1;
+storeSelect.add(option);
+strForm.appendChild(storeSelect);
 
 storeContent.appendChild(strForm);
+populateStoreSelect();
 
 //Create the search box for the product
 var productContent = document.getElementById('productContent');
@@ -46,7 +42,7 @@ prdForm.appendChild(prdSrcBtn);
 
 productContent.appendChild(prdForm);
 
-var productToStore = document.getElementById('productToStore');
+
 
 const div1 = document.createElement('div');
 div1.setAttribute('class','card mb-3');
@@ -94,7 +90,7 @@ const div1_1 = document.createElement('div');
 div1_1.setAttribute('class','card mb-3');
 const div2_1 = document.createElement('card-header');
 div2_1.setAttribute('class','card-header');
-div2_1.textContent = "Store list";
+div2_1.textContent = "Store Detail";
 const div3_1 = document.createElement('div');
 div3_1.setAttribute('class','card-body');
 const div4_1 = document.createElement('div');
@@ -113,6 +109,12 @@ const th2_1 = document.createElement('th');
 th2_1.textContent = 'Number';
 const th3_1 = document.createElement('th');
 th3_1.textContent = 'Location';
+const th4_2 = document.createElement('th');
+th4_2.textContent = 'Address';
+const th5_1 = document.createElement('th');
+th5_1.textContent = 'Postal Code';
+const th6_1 = document.createElement('th');
+th6_1.textContent = 'Active';
 const th4_1 = document.createElement('th');
 th4_1.textContent = 'Actions';          
 
@@ -131,71 +133,88 @@ thead_1.appendChild(tr_1);
 tr_1.appendChild(th1_1);
 tr_1.appendChild(th2_1);
 tr_1.appendChild(th3_1);    
-tr_1.appendChild(th4_1); 
+tr_1.appendChild(th4_2);
+tr_1.appendChild(th5_1);
+tr_1.appendChild(th6_1);
+tr_1.appendChild(th4_1);
 
-const actionButton = document.createElement('button');
-actionButton.textContent = 'Assign products to store';
-actionButton.setAttribute('class','btn-primary');
 
-const div1_2 = document.createElement('div');
-div1_2.setAttribute('class','card mb-3');
-const div2_2 = document.createElement('card-header');
-div2_2.setAttribute('class','card-header');
-div2_2.textContent = "Store list";
-const div3_2 = document.createElement('div');
-div3_2.setAttribute('class','card-body');
-const div4_2 = document.createElement('div');
-div4_2.setAttribute('class','table-responsive');
-const table_2 = document.createElement('table');
-table_2.setAttribute('class','table table-bordered');
-table_2.setAttribute('width','100%');
-table_2.setAttribute('cellspacing','0');
-const thead_2 = document.createElement('thead');
-const tfoot_2 = document.createElement('tfoot');
-const tr_2 = document.createElement('tr');
-const th1_2 = document.createElement('th');
-th1_2.textContent = 'Store Number';
-const th2_2 = document.createElement('th');
-th2_2.textContent = 'Store Name';
-const th3_2 = document.createElement('th');
-th3_2.textContent = 'Product Title';
-const th4_2 = document.createElement('th');
-th4_2.textContent = 'Product SKU';          
-const th5_2 = document.createElement('th');
-th5_2.textContent = 'Product URL';                  
+//This section is dedicated to the creation of product to store 
+//listing
 
-const productStoreBody = document.createElement('tbody');
+// var productToStore = document.getElementById('productToStore');
+// const actionButton = document.createElement('button');
+// actionButton.textContent = 'Add list';
+// actionButton.setAttribute('class','btn-primary');
+// const commitList = document.createElement('button');
+// commitList.textContent = 'Confirm changes';
+// commitList.setAttribute('class','btn-primary');
 
-productToStore.appendChild(actionButton);
-productToStore.appendChild(div1_2);
+// const div1_2 = document.createElement('div');
+// div1_2.setAttribute('class','card mb-3');
+// const div2_2 = document.createElement('card-header');
+// div2_2.setAttribute('class','card-header');
+// div2_2.textContent = "Store list";
+// const div3_2 = document.createElement('div');
+// div3_2.setAttribute('class','card-body');
+// const div4_2 = document.createElement('div');
+// div4_2.setAttribute('class','table-responsive');
+// const table_2 = document.createElement('table');
+// table_2.setAttribute('class','table table-bordered');
+// table_2.setAttribute('width','100%');
+// table_2.setAttribute('cellspacing','0');
+// const thead_2 = document.createElement('thead');
+// const tfoot_2 = document.createElement('tfoot');
+// const tr_2 = document.createElement('tr');
+// const th1_2 = document.createElement('th');
+// th1_2.textContent = 'Store Number';
+// const th2_2 = document.createElement('th');
+// th2_2.textContent = 'Store Name';
+// const th3_2 = document.createElement('th');
+// th3_2.textContent = 'Product Title';
+// const th4_2 = document.createElement('th');
+// th4_2.textContent = 'Product SKU';          
+// const th5_2 = document.createElement('th');
+// th5_2.textContent = 'Product URL';                  
 
-div1_2.appendChild(div2_2);
-div2_2.appendChild(div3_2);
-div3_2.appendChild(div4_2);
-div4_2.appendChild(table_2);
-table_2.appendChild(thead_2);
-table_2.appendChild(tfoot_2);
-table_2.appendChild(productStoreBody);
-tfoot_2.appendChild(tr_2);
-thead_2.appendChild(tr_2);
-tr_2.appendChild(th1_2);
-tr_2.appendChild(th2_2);
-tr_2.appendChild(th3_2);    
-tr_2.appendChild(th4_2); 
-tr_2.appendChild(th5_2); 
+// const productStoreBody = document.createElement('tbody');
 
+
+
+// productToStore.appendChild(actionButton);
+// productToStore.appendChild(div1_2);
+
+// div1_2.appendChild(div2_2);
+// div2_2.appendChild(div3_2);
+// div3_2.appendChild(div4_2);
+// div4_2.appendChild(table_2);
+// table_2.appendChild(thead_2);
+// table_2.appendChild(tfoot_2);
+// table_2.appendChild(productStoreBody);
+// tfoot_2.appendChild(tr_2);
+// thead_2.appendChild(tr_2);
+// tr_2.appendChild(th1_2);
+// tr_2.appendChild(th2_2);
+// tr_2.appendChild(th3_2);    
+// tr_2.appendChild(th4_2); 
+// tr_2.appendChild(th5_2); 
+
+// actionButton.onclick = ()=>
+// {
+//     addProductStore();
+// }
 
 //events on the code
 
-actionButton.onclick = ()=>
+storeSelect.onchange = ()=>
 {
-    addProductStore();
+    appendStoreToTable(storeSelect.value);
 }
 
-prdSrcBtn.onclick = function()
+prdSrcBtn.onclick = () =>
 {
     let sku = prdSrcBox.value;
-    searchProduct(sku)
+    searchProduct(sku);
 }
 
 //Here I will search for the stores in the database
@@ -240,6 +259,10 @@ btnCancelProduct.onclick = ()=>{
     prdTitle.textContent = '';
     prdSKU.textContent = '';
     prdURL.textContent = '';
+}
+
+commitList.onclick = () =>{
+    alert('Send the products to the table');
 }
 
 function removeElement(arr, value)

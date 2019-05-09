@@ -3,7 +3,8 @@ function searchProduct(sku)
 {
     var query = 'products' +'/'+sku;
     var resultQuery = queryToAPI(query,'get');
-    resultQuery.then((result)=>{
+    resultQuery.then((result)=>
+    {
         var resJSON = JSON.parse(result.target.response);
         showModalProduct(resJSON);
     }).catch((err)=>
@@ -155,8 +156,22 @@ function showModalStore(StoreData)
 
 function appendStoreToTable(storeNumber)
 {
+    var tra = storeContentBody.lastElementChild;
+    console.log(tra);
+    if(tra != null)
+    {
+        //storeContentBody.removeChild(tra);
+        storeContentBody.deleteRow(tra);
+    }
+    // {
+    //     var trr = storeContentBody.childNodes;  
+    //     console.log(trr);
+    //     console.log(trr.NodelList[1]);
+    // }
+    
+    
     var query = 'store' +'/'+storeNumber;
-    var resultQuery = queryToAPI(query,'get');         
+    var resultQuery = queryToAPI(query,'get');
     resultQuery.then((result)=>{
         var storeInfo = JSON.parse(result.target.response);
         var store =
@@ -164,24 +179,22 @@ function appendStoreToTable(storeNumber)
             Number: storeInfo[0].Number,
             Name: storeInfo[0].Name
         }
-        if(containElementStore(listStores, store))
-        {        
-            storeModal.style.display = 'none';
-            return;
-        }
-        else{         
-            
-            listStores.push(store);
-        }
-
+       
+        console.log('passed');
         var tr = document.createElement('tr');
         var th1 = document.createElement('th');
         var th2 = document.createElement('th');
-        var th3 = document.createElement('th');        
+        var th3 = document.createElement('th');   
+        var th4_1 = document.createElement('th');
+        var th5 = document.createElement('th');
+        var th6 = document.createElement('th');
         var th4 = document.createElement('th');
         th1.textContent = storeInfo[0].Name;
         th2.textContent = storeInfo[0].Number;
-        th3.textContent = storeInfo[0].Address + ', ' + storeInfo[0].City;
+        th3.textContent = storeInfo[0].Country+', '+ storeInfo[0].Province +', ' + storeInfo[0].City;
+        th4_1.textContent = storeInfo[0].Address;
+        th5.textContent = storeInfo[0].PostalCode;
+        th6.textContent = storeInfo[0].Active;
         var listButton =  document.createElement('button');        
         listButton.setAttribute('class', 'btn-primary');
         listButton.textContent='List';
@@ -193,23 +206,27 @@ function appendStoreToTable(storeNumber)
         tr.appendChild(th1);
         tr.appendChild(th2);
         tr.appendChild(th3);
+        tr.appendChild(th4_1);
+        tr.appendChild(th5);
+        tr.appendChild(th6);
         tr.appendChild(th4);
+        console.log(tr);
         storeContentBody.appendChild(tr);
-        storeModal.style.display = 'none';    
+        //storeModal.style.display = 'none';    
         
         listButton.onclick =()=>{
             alert('List');
         }        
-        deleteButton.onclick = ()=>{
-            var storeEle=
-            {
-                Number: th2.textContent,
-                Name: th1.textContent
-            }
-            storeContentBody.removeChild(tr);   
-            var res = removeElementStore(listStores, storeEle);
-            listStores = res;
-        }
+        // deleteButton.onclick = ()=>{
+        //     var storeEle =
+        //     {
+        //         Number: th2.textContent,
+        //         Name: th1.textContent
+        //     }
+        //     storeContentBody.removeChild(tr);   
+        //     var res = removeElementStore(listStores, storeEle);
+        //     listStores = res;
+        // }
 
     }).catch((err)=>
     {
@@ -217,40 +234,65 @@ function appendStoreToTable(storeNumber)
     });
 }
 
-function addProductStore()
+function populateStoreSelect() 
 {
+    var query = 'store';
+    var resultQuery = queryToAPI(query,'get');
+    resultQuery.then((result)=>
+    {
+        var resJSON = JSON.parse(result.target.response);
+        populateStores(resJSON);
+    }).catch((err)=>
+    {
+        console.log(err);
+    });
+}
+
+function populateStores(Jobject)
+{
+    Jobject.forEach((store,index,array)=>
+    {
+        var opt = document.createElement('option');
+        opt.text = store.Number +': '+store.Name;
+        opt.value = store.Number;
+        storeSelect.appendChild(opt);
+    });
+}
+//Deprecated funciton. It was serving the product to store listing
+// function addProductStore()
+// {
     
-    listProducts.forEach((product,indexpr,arraypr)=>{        
-        listStores.forEach((store, index, array)=>{
+//     listProducts.forEach((product,indexpr,arraypr)=>{        
+//         listStores.forEach((store, index, array)=>{
             
-            var tr = document.createElement('tr');
-            var th1 = document.createElement('th');
-            var th2 = document.createElement('th');
-            var th3 = document.createElement('th');
-            var th4 = document.createElement('th');
-            var th5 = document.createElement('th');
-            var th6 = document.createElement('th');        
+//             var tr = document.createElement('tr');
+//             var th1 = document.createElement('th');
+//             var th2 = document.createElement('th');
+//             var th3 = document.createElement('th');
+//             var th4 = document.createElement('th');
+//             var th5 = document.createElement('th');
+//             var th6 = document.createElement('th');        
             
-            th1.textContent = store.Number;
-            th2.textContent = store.Name;
-            th3.textContent = product.Title;
-            th4.textContent = product.SKU;
-            var link = document.createElement('a');
-            link.setAttribute('href',product.URL);
-            link.setAttribute('target','_blank');
-            link.textContent = product.URL;
-            th5.appendChild(link);
+//             th1.textContent = store.Number;
+//             th2.textContent = store.Name;
+//             th3.textContent = product.Title;
+//             th4.textContent = product.SKU;
+//             var link = document.createElement('a');
+//             link.setAttribute('href',product.URL);
+//             link.setAttribute('target','_blank');
+//             link.textContent = product.URL;
+//             th5.appendChild(link);
           
 
-            tr.appendChild(th1);
-            tr.appendChild(th2);
-            tr.appendChild(th3);
-            tr.appendChild(th4);
-            tr.appendChild(th5);
+//             tr.appendChild(th1);
+//             tr.appendChild(th2);
+//             tr.appendChild(th3);
+//             tr.appendChild(th4);
+//             tr.appendChild(th5);
       
 
-            productStoreBody.appendChild(tr);
+//             productStoreBody.appendChild(tr);
 
-         });
-      });
-}
+//          });
+//       });
+// }
