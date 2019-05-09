@@ -1,8 +1,6 @@
 # Management web page
 
-This project connects with the API that is being created to manage the prices on the retail stores.
-
-This will offer all the important parts needed to generate a complete administration process for the prices.
+Prifast administrates price changes due to market fluctuations. The whole system reduces the cost of implementing new prices due to the fact that it does not need to deploy labor to obtain results.
 
 ## View of product listing
 
