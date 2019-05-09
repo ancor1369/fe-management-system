@@ -216,17 +216,7 @@ function appendStoreToTable(storeNumber)
         
         listButton.onclick =()=>{
             alert('List');
-        }        
-        // deleteButton.onclick = ()=>{
-        //     var storeEle =
-        //     {
-        //         Number: th2.textContent,
-        //         Name: th1.textContent
-        //     }
-        //     storeContentBody.removeChild(tr);   
-        //     var res = removeElementStore(listStores, storeEle);
-        //     listStores = res;
-        // }
+        }               
 
     }).catch((err)=>
     {
