@@ -137,83 +137,18 @@ tr_1.appendChild(th5_1);
 tr_1.appendChild(th6_1);
 tr_1.appendChild(th4_1);
 
-
-//This section is dedicated to the creation of product to store 
-//listing
-
-// var productToStore = document.getElementById('productToStore');
-// const actionButton = document.createElement('button');
-// actionButton.textContent = 'Add list';
-// actionButton.setAttribute('class','btn-primary');
-// const commitList = document.createElement('button');
-// commitList.textContent = 'Confirm changes';
-// commitList.setAttribute('class','btn-primary');
-
-// const div1_2 = document.createElement('div');
-// div1_2.setAttribute('class','card mb-3');
-// const div2_2 = document.createElement('card-header');
-// div2_2.setAttribute('class','card-header');
-// div2_2.textContent = "Store list";
-// const div3_2 = document.createElement('div');
-// div3_2.setAttribute('class','card-body');
-// const div4_2 = document.createElement('div');
-// div4_2.setAttribute('class','table-responsive');
-// const table_2 = document.createElement('table');
-// table_2.setAttribute('class','table table-bordered');
-// table_2.setAttribute('width','100%');
-// table_2.setAttribute('cellspacing','0');
-// const thead_2 = document.createElement('thead');
-// const tfoot_2 = document.createElement('tfoot');
-// const tr_2 = document.createElement('tr');
-// const th1_2 = document.createElement('th');
-// th1_2.textContent = 'Store Number';
-// const th2_2 = document.createElement('th');
-// th2_2.textContent = 'Store Name';
-// const th3_2 = document.createElement('th');
-// th3_2.textContent = 'Product Title';
-// const th4_2 = document.createElement('th');
-// th4_2.textContent = 'Product SKU';          
-// const th5_2 = document.createElement('th');
-// th5_2.textContent = 'Product URL';                  
-
-// const productStoreBody = document.createElement('tbody');
-
-
-
-// productToStore.appendChild(actionButton);
-// productToStore.appendChild(div1_2);
-
-// div1_2.appendChild(div2_2);
-// div2_2.appendChild(div3_2);
-// div3_2.appendChild(div4_2);
-// div4_2.appendChild(table_2);
-// table_2.appendChild(thead_2);
-// table_2.appendChild(tfoot_2);
-// table_2.appendChild(productStoreBody);
-// tfoot_2.appendChild(tr_2);
-// thead_2.appendChild(tr_2);
-// tr_2.appendChild(th1_2);
-// tr_2.appendChild(th2_2);
-// tr_2.appendChild(th3_2);    
-// tr_2.appendChild(th4_2); 
-// tr_2.appendChild(th5_2); 
-
-// actionButton.onclick = ()=>
-// {
-//     addProductStore();
-// }
-
-//events on the code
-
 storeSelect.onchange = ()=>
 {
+    listProducts = [];
+    listStores = [];
     appendStoreToTable(storeSelect.value);
     populateProductsPerStore(storeSelect.value);
+    
 }
 
 prdSrcBtn.onclick = () =>
-{
-    let sku = prdSrcBox.value;
+{    
+    let sku = prdSrcBox.value;    
     searchProduct(sku);
 }
 
@@ -222,14 +157,6 @@ strSrcBtn.onclick = ()=>{
     
     let storeNumber = strStoreSrchBx.value;
     searchStore(storeNumber);
-}
-
-btnAddProduct.onclick = ()=> 
-{
-    console.log('This is where product is added');
-    var sku = document.getElementById('txtProductSKUModal');    
-    var result  = appendPrdToTable(sku.innerText);
-    console.log(result);    
 }
 
 btnAddStore.onclick = ()=>

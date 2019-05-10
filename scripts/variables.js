@@ -13,14 +13,15 @@ function queryToAPI(crud,method, message)
         URL = queryURL;
         URL = concatPath(URL,crud);
         console.log(URL);
+        console.log(message);
         var request =  new XMLHttpRequest();
 
         request.open(method,URL,true);    
         if(message!=undefined) 
         {
             console.log('With cors');
-            request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');       
-            request.send(message);
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");       
+            request.send(JSON.stringify(message));           
         }
         else
         {

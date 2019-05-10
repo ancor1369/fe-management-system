@@ -1,6 +1,12 @@
 
 function searchProduct(sku)
 {
+    console.log(sku);
+    if(sku=='')
+    {
+        alert('Please type a SKU');
+        return;
+    }
     var query = 'products' +'/'+sku;
     var resultQuery = queryToAPI(query,'get');
     resultQuery.then((result)=>
@@ -15,23 +21,43 @@ function searchProduct(sku)
 
 //This window allow the user to see what is the product that was found
 function showModalProduct(product)
-{
-    console.log(product); 
+{    
     if(product.length != 0)
     {
         var prdTitle = document.getElementById('txtProductTitleModal');
         var prdSKU = document.getElementById('txtProductSKUModal');
         var prdURL = document.getElementById('txtProductURLModal');
+        var addBtn = document.getElementById('btnAddProduct');
+        var cancelBtn = document.getElementById('btnCancelProduct');
         prdTitle.textContent = product[0].Title;    
-        prdSKU.textContent = product[0].SKU;
-        //prdURL.textContent = product[0].ShortURL;
+        prdSKU.textContent = product[0].SKU;        
         var link = document.createElement('a');
         link.setAttribute('href',product[0].ShortURL);
         link.setAttribute('target','_blank');
         link.textContent = product[0].ShortURL;
         prdURL.appendChild(link);
-
         ProductSearchModal.style.display = 'block';
+
+        addBtn.onclick = ()=>
+        {           
+            console.log('This is where product is added');
+            var sku = document.getElementById('txtProductSKUModal');    
+            var result  = appendPrdToTable(sku.innerText);
+            prdTitle.textContent = '';
+            prdSKU.textContent = '';
+            prdURL.textContent = '';
+            link.textContent = '';
+            console.log(result); 
+        };
+
+        cancelBtn.onclick = ()=>{
+            prdTitle.textContent = '';
+            prdSKU.textContent = '';
+            prdURL.textContent = '';
+            link.textContent = '';
+            ProductSearchModal.style.display = 'none';
+        }
+
     }
     else{        
         NotFoundModal.style.display = 'block';
@@ -45,27 +71,68 @@ function showModalProduct(product)
 //this function appends a new product to the table
 function appendPrdToTable(sku)
 {    
+    console.log(sku);
     if(sku.length != 0)
     {
+        
+              
         //Get the product again from the service
         var query = 'products' +'/'+sku;
         var resultQuery = queryToAPI(query,'get');
         resultQuery.then((result)=>{
             var resJSON = JSON.parse(result.target.response);  
             console.log(resJSON);    
-            var store = 
+            var prd = 
             {
                 SKU: resJSON[0].SKU,
                 Title: resJSON[0].Title,               
                 URL: resJSON[0].ShortURL                                
             }        
-            if(containElement(listProducts, store))
+            if(containElement(listProducts, prd))
             {        
                 ProductSearchModal.style.display = 'none';
+                clearModal();
                 return;
             } 
             else{
-                listProducts.push(store);
+                listProducts.push(prd);
+                //send the request to the API to add the new product
+                if(listProducts.length == 1)   
+                {
+                    //Backend service needs modification to 
+                    //support this functionlity
+                    console.log('Post store');
+                    var message = 
+                    {
+                        SKU: sku,
+                        stores: listStores                       
+                    }
+                    console.log(message);
+                    var query = 'storeproduct';
+                    var resQ = queryToAPI(query,'post', message);
+                    resQ.then((result)=>{
+                        console.log(result);
+                    }).catch((error)=>{
+                        console.log(error);
+                        return;
+                    });
+                }
+                else
+                {
+                    console.log('Patch store');                   
+                    var msj = {
+                        SKU: sku,
+                        Name: listStores[0].Name,
+                        Number: listStores[0].Number
+                    }                    
+                    var query = 'storeProduct/';
+                    var resQ = queryToAPI(query,'PATCH', msj);
+                    resQ.then((resutl)=>{
+                        console.log(resutl)
+                    }).catch((error)=>{
+                        console.log(error);
+                    });
+                }
             }
             var tr = document.createElement('tr');
             var th1 = document.createElement('th');
@@ -78,23 +145,23 @@ function appendPrdToTable(sku)
             link.textContent = resJSON[0].ShortURL;
             var th3 = document.createElement('th');            
             th3.appendChild(link);
-            var listBtn = document.createElement('button');
-            listBtn.setAttribute('class','btn-primary');
-            listBtn.textContent = "List";
-            // var dltBtn = document.createElement('button');
-            // dltBtn.setAttribute('class','btn-danger');
-            // dltBtn.textContent = "Remove";
+            var dltBtn = document.createElement('button');
+            dltBtn.setAttribute('class','btn-danger');            
+            var spa = document.createElement('span');
+            spa.setAttribute('class','fas fa-window-close fa-fw');
+            dltBtn.appendChild(spa);
+            
             var th4 = document.createElement('th');
-            th4.appendChild(listBtn);
-            //th4.appendChild(dltBtn);            
+            th4.appendChild(dltBtn);
+               
             tr.appendChild(th1);
             tr.appendChild(th2);
             tr.appendChild(th3);
             tr.appendChild(th4);
-            productContentBody.appendChild(tr);
-            ProductSearchModal.style.display = 'none';
+            productContentBody.appendChild(tr);            
+            ProductSearchModal.style.display = 'none';            
             
-            listBtn.onclick = () =>{
+            dltBtn.onclick = () =>{
                 alert(th2.textContent);
             }
             dltBtn.onclick = ()=>{                
@@ -156,6 +223,7 @@ function showModalStore(StoreData)
 
 function appendStoreToTable(storeNumber)
 {
+    
     var tra = storeContentBody.lastElementChild;    
     if(tra != null)
     {    
@@ -170,6 +238,7 @@ function appendStoreToTable(storeNumber)
             Number: storeInfo[0].Number,
             Name: storeInfo[0].Name
         }               
+        listStores.push(store);
         var tr = document.createElement('tr');
         var th1 = document.createElement('th');
         var th2 = document.createElement('th');
@@ -219,15 +288,42 @@ function populateProductsPerStore(storeID)
         console.log(error);
     });
 }
-var malabar;
+
 function PopulateProducts(Jobject)
-{
-    malabar= Jobject;
+{      
+    var exiting = productContentBody.lastElementChild;
+    if(exiting!=null)
+    {
+      while(exiting)
+      {
+        productContentBody.removeChild(exiting);
+        exiting = productContentBody.lastElementChild;
+      }
+    }
+
+    if(Jobject.Result == "NoProducts")
+    {
+        alert('This store does not have products');
+        return;
+    }
+
     Jobject.forEach((resJSON, index, array)=>{
         
-        // console.log(resJSON[0]);
-        if(index != 0)
-        {       
+        if(resJSON.length > 0)
+        {               
+            var prod = 
+            {
+                SKU: resJSON[0].SKU,
+                Title: resJSON[0].Title,               
+                URL: resJSON[0].ShortURL                                
+            }        
+            if(containElement(listProducts, prod))
+            {                 
+                return;
+            }            
+            else{
+                listProducts.push(prod);
+            }            
             var tr = document.createElement('tr');
             var th1 = document.createElement('th');
             th1.textContent = resJSON[0].Title;
@@ -239,11 +335,13 @@ function PopulateProducts(Jobject)
             link.textContent = resJSON[0].ShortURL;
             var th3 = document.createElement('th');            
             th3.appendChild(link);
-            var listBtn = document.createElement('button');
-            listBtn.setAttribute('class','btn-primary');
-            listBtn.textContent = "List";           
+            var deleteBtn = document.createElement('button');
+            var spa =  document.createElement('span');
+            spa.setAttribute('class','fas fa-window-close fa-fw');
+            deleteBtn.setAttribute('class','btn btn-danger');
+            deleteBtn.appendChild(spa);                    
             var th4 = document.createElement('th');
-            th4.appendChild(listBtn);
+            th4.appendChild(deleteBtn);
                         
             tr.appendChild(th1);
             tr.appendChild(th2);
@@ -252,21 +350,9 @@ function PopulateProducts(Jobject)
             productContentBody.appendChild(tr);
             ProductSearchModal.style.display = 'none';
             
-            listBtn.onclick = () =>{
+            deleteBtn.onclick = () =>{
                 alert(th2.textContent);
-            }
-            // dltBtn.onclick = ()=>{                
-            //     productContentBody.removeChild(tr);   
-            //     var remObject =
-            //     {
-            //         Title: th1.textContent,
-            //         SKU: th2.textContent,
-            //         URL: th3.textContent
-            //     }             
-            //     var res = removeElement(listProducts, remObject);
-            //     console.log(res);
-            //     listProducts = res;
-            // }
+            }           
         }
 
     });
