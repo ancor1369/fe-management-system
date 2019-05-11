@@ -11,8 +11,9 @@ function searchOnePrice(ProductSKU)
         var product = promiseUnits('products',ProductSKU);
         product.then(function(result)
         {
+            console.log("Enters here");
             var prd = JSON.parse(result.explicitOriginalTarget.response);
-            console.log(prd);
+            //console.log(prd);
             ProductInfo(prd);
             createTablePrice(priceHistory);            
             console.log(prd);
@@ -106,14 +107,19 @@ function promiseUpdate(messageObject)
 function ProductInfo(prd)
 {
     
-    try{
+    try
+    {
+        console.log("ProductInfo");
         var rmDiv = document.getElementById('prdDiv');
+        console.log(rmDiv);
         rmDiv.remove();
     }
-    catch{
-
+    catch(Err)
+    {        
+        console.log(Err);
     }
-    var productResult =  prd.result[0];
+    console.log(prd)
+    var productResult =  prd[0];
     console.log('Product info');    
     console.log(productResult);
 
