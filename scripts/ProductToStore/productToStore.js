@@ -73,9 +73,7 @@ function appendPrdToTable(sku)
 {    
     console.log(sku);
     if(sku.length != 0)
-    {
-        
-              
+    {             
         //Get the product again from the service
         var query = 'products' +'/'+sku;
         var resultQuery = queryToAPI(query,'get');
@@ -90,8 +88,7 @@ function appendPrdToTable(sku)
             }        
             if(containElement(listProducts, prd))
             {        
-                ProductSearchModal.style.display = 'none';
-                clearModal();
+                ProductSearchModal.style.display = 'none';                
                 return;
             } 
             else{
@@ -105,7 +102,8 @@ function appendPrdToTable(sku)
                     var message = 
                     {
                         SKU: sku,
-                        stores: listStores                       
+                        Name: listStores[0].Name,
+                        Number:listStores[0].Number
                     }
                     console.log(message);
                     var query = 'storeproduct';
@@ -161,9 +159,9 @@ function appendPrdToTable(sku)
             productContentBody.appendChild(tr);            
             ProductSearchModal.style.display = 'none';            
             
-            dltBtn.onclick = () =>{
-                alert(th2.textContent);
-            }
+            // dltBtn.onclick = () =>{
+            //     alert(th2.textContent);
+            // }
             dltBtn.onclick = ()=>{                
                 productContentBody.removeChild(tr);   
                 var remObject =
@@ -222,8 +220,7 @@ function showModalStore(StoreData)
 }
 
 function appendStoreToTable(storeNumber)
-{
-    
+{    
     var tra = storeContentBody.lastElementChild;    
     if(tra != null)
     {    
@@ -341,21 +338,50 @@ function PopulateProducts(Jobject)
             deleteBtn.setAttribute('class','btn btn-danger');
             deleteBtn.appendChild(spa);                    
             var th4 = document.createElement('th');
-            th4.appendChild(deleteBtn);
-                        
+            th4.appendChild(deleteBtn);                        
             tr.appendChild(th1);
             tr.appendChild(th2);
             tr.appendChild(th3);
             tr.appendChild(th4);
             productContentBody.appendChild(tr);
-            ProductSearchModal.style.display = 'none';
-            
+            ProductSearchModal.style.display = 'none';            
             deleteBtn.onclick = () =>{
-                alert(th2.textContent);
+                productContentBody.removeChild(tr);                
+                deleteStore(resJSON[0].SKU);
             }           
         }
 
     });
+}
+
+function deleteStore(sku)
+{
+    var temp = [];
+    //Remove the variable from the array 
+    //where I keep the units of the store
+    listProducts.forEach((item,index,array)=>{
+        console.log(item.SKU); 
+        if(item.SKU != sku)       
+        {
+            temp.push(item);
+        }        
+    });
+    listProducts = [];
+    listProducts = temp;
+    console.log(temp);
+    var delObj =
+    {
+        SKU: sku,
+        Name: listStores[0].Name,
+        Number: listStores[0].Number
+    }
+    var query = 'storeProduct';
+    var resPromise = queryToAPI(query,'delete',delObj);
+    resPromise.then((result)=>{
+        console.log(result);
+    }).catch((error)=>{
+        console.log(error);
+    });    
 }
 
 function populateStoreSelect() 
