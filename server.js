@@ -5,9 +5,14 @@ var fs = require('fs');
 
 http.createServer(function(req,res){
     pathname = url.parse(req.url).pathname;
+    
+    if(pathname == '/')
+    {
+        pathname = "/dashboard.html"
+    }    
 
     fs.readFile(__dirname + pathname, function(err,data)
-    {
+    {       
         if(err)
         {
             res.writeHead(404,{'Content-Type':'text/plain'});
